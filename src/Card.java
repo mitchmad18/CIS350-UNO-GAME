@@ -18,23 +18,11 @@ public class Card {
     return color;
   }
 
-  public void setColor(Colors color) {
-    this.color = color;
-  }
-
   public int getNumber() {
     return number;
   }
 
-  public void setNumber(int number) {
-    this.number = number;
-  }
-
   public ActionCard getAction() {
     return action;
-  }
-
-  public void setAction(ActionCard action) {
-    this.action = action;
   }
 }
