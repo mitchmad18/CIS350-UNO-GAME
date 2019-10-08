@@ -66,6 +66,8 @@ public class Deck {
         System.out.println(card.getColor() + " " + card.getAction());
       }
     }
+
+    System.out.println(deck.rear);
   }
 
 }
