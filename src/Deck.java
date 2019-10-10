@@ -1,4 +1,5 @@
 import java.util.EnumSet;
+import java.util.Random;
 
 public class Deck {
 
@@ -29,7 +30,7 @@ public class Deck {
     EnumSet.range(Colors.RED, Colors.YELLOW).forEach(color -> {
       addToDeck(new Card(color, 0));
       rear++;
-      for(int i = 1; i < 10; i++){
+      for (int i = 1; i < 10; i++) {
         addToDeck(new Card(color, i));
         rear++;
         addToDeck(new Card(color, i));
@@ -44,7 +45,7 @@ public class Deck {
       });
     });
 
-    for(int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
       addToDeck(new Card(Colors.NONE, ActionCard.WILD));
       rear++;
       addToDeck(new Card(Colors.NONE, ActionCard.WILDFOUR));
@@ -52,9 +53,26 @@ public class Deck {
     }
   }
 
+    public void shuffleDeck() {
+      Random rnd = new Random();
+      for(int i = deck.length - 1; i > 0; i--) {
+
+        int randomPosition = rnd.nextInt(i + 1);
+        Card cardToSwitch = deck[randomPosition];
+        deck[randomPosition] = deck[i];
+        deck[i] = cardToSwitch;
+      }
+    }
+
+    public void dealCards() {
+
+    }
+
+
   public static void main(String[] args) {
     Deck deck = new Deck();
     deck.startDeck();
+    deck.shuffleDeck();
 
     Card[] decks = deck.getDeck();
 
@@ -66,8 +84,6 @@ public class Deck {
         System.out.println(card.getColor() + " " + card.getAction());
       }
     }
-
-    System.out.println(deck.rear);
   }
 
 }
