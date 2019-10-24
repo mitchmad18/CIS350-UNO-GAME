@@ -1,8 +1,18 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 public class Card {
+
 
   private Colors color;
   private int number;
   private ActionCard action;
+
+  public void setColor(Colors color) {
+    this.color = color;
+  }
 
   public Card(Colors color, int number) {
     this.color = color;
@@ -15,14 +25,14 @@ public class Card {
   }
 
   public Colors getColor() {
-    return color;
+    return this.color;
   }
 
   public int getNumber() {
-    return number;
+    return this.number;
   }
 
   public ActionCard getAction() {
-    return action;
+    return this.action;
   }
 }
