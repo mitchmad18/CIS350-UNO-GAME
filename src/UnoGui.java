@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -44,25 +46,25 @@ public class UnoGui implements ActionListener {
 
         GridBagConstraints c = new GridBagConstraints();
 
+        ImageIcon blankUnoCard = new ImageIcon("C:/Users/madie/Documents/GitHub/CIS350-UNO-GAME/src/resources/blankUnoCardSmall.png");
+
+        //Sets up the draw pile
         btnDrawCard = new JButton();
         c.gridx = 0;
         c.gridy = 0;
         btnDrawCard.addActionListener(this);
         btnDrawCard.setPreferredSize(new Dimension(70,100));
+        btnDrawCard.setIcon(blankUnoCard);
         panel.add(btnDrawCard,c);
+
+        //Sets up the discard pile
+        JLabel blankUnoCardLabel = new JLabel();
+        blankUnoCardLabel.setIcon(blankUnoCard);
+        blankUnoCardLabel.setPreferredSize(new Dimension(70,100));
+        panel.add(blankUnoCardLabel);
 
         f.getContentPane().add(panel);
         f.setVisible(true);
-
-        JRadioButton yesButton = new JRadioButton("Yes");
-        yesButton.setSelected(false);
-        JRadioButton noButton = new JRadioButton("No");
-        noButton.setSelected(true);
-
-        ButtonGroup stackDraw2 = new ButtonGroup();
-        stackDraw2.add(yesButton);
-        stackDraw2.add(noButton);
-
 
         resetGame();
     }
