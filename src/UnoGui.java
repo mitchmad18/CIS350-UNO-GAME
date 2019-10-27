@@ -5,7 +5,7 @@ import java.awt.image.ImageProducer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class UnoGui implements ActionListener {
+public class UnoGui extends JPanel implements ActionListener {
 
     //Variables for the GUI
     private JFrame f;
@@ -19,6 +19,9 @@ public class UnoGui implements ActionListener {
     private Integer[] optionsNumOfCardsDealt = new Integer[] {5,6,7,8,9,10};
     private SpinnerListModel sLMNumOfCardsDealt = new SpinnerListModel(optionsNumOfCardsDealt);
     private JSpinner numOfCardsDealt = new JSpinner(sLMNumOfCardsDealt);
+
+    private JRadioButton stackDraw2Yes = new JRadioButton("Yes");
+    private JButton stackDraw2No = new JButton("No");
 
     private UnoGui(){
         f=new JFrame("Uno Game");
@@ -43,6 +46,10 @@ public class UnoGui implements ActionListener {
         f.setJMenuBar(mb);
         f.setSize(800,600);
         f.setVisible(true);
+
+        JComboBox numOfCardsToDeal = new JComboBox(optionsNumOfCardsDealt);
+        numOfCardsToDeal.setSelectedIndex(3);
+        numOfCardsToDeal.addActionListener(this);
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -84,25 +91,19 @@ public class UnoGui implements ActionListener {
     //Resets the gameboard and prompts the rules popup menu
     private void resetGame() {
         JOptionPane.showConfirmDialog(null,
-                dialogOptions, "My custom dialog", JOptionPane.PLAIN_MESSAGE);
-
+                dialogOptions, "New Game", JOptionPane.DEFAULT_OPTION);
     }
 
     private void drawCard() {
 
     }
 
-
-    JRadioButton noStack = new JRadioButton("No");
-
-    ButtonGroup stackDraw2Options = new ButtonGroup();
-
     //Sets the options for the rules dialog box
     private final JComponent[] dialogOptions = new JComponent[]{
-            new JLabel("Welcome to UNO!"),
-            new JLabel("Please select the rules you would like to use:"),
+            new JLabel("Welcome to UNO! Please select the rules you would like to use:"),
             new JLabel("\nHow many cards should be dealt?"),
                 numOfCardsDealt,
             new JLabel("Would you like to allow Draw 2 cards to be stacked?")
+
     };
 }
