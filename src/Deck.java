@@ -72,9 +72,12 @@ public class Deck {
 
   }
 
+<<<<<<< HEAD
   public void dealCards() {
   }
 
+=======
+>>>>>>> 70c60de16aca4aec88b1f66a4691e449e6a4b674
   public static void main(String[] args) {
     Deck deck = new Deck();
     deck.startDeck();
