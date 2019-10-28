@@ -1,3 +1,25 @@
+/******************************************************************************
+ * The colors that are in a game of UNO, none is to denote WILD cards
+ ******************************************************************************/
 public enum Colors {
-  RED, GREEN, BLUE, YELLOW, NONE;
+  /**
+   * Red color
+   **/
+  RED,
+  /**
+   * Green color
+   **/
+  GREEN,
+  /**
+   * Blue color
+   **/
+  BLUE,
+  /**
+   * Yellow color
+   **/
+  YELLOW,
+  /**
+   * No color
+   **/
+  NONE
 }
