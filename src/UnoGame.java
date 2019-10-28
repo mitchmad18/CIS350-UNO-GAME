@@ -14,24 +14,28 @@ public class UnoGame {
   /**
    * The control handler for player rotation
    **/
-  public GameDoublyLinkedList turnController;
+  public GameDoublyLinkedList turnController = new GameDoublyLinkedList();
   /**
    * The direction the game
    **/
-  public Direction direction;
+  public Direction direction = Direction.RIGHT;
   /**
-   * The current color in play; the next player most follow the same color unless changed
+   * The current card in play
    **/
   public Card currentCard;
-
+  /**
+   * @return the current player
+   **/
   public GameDoublyLinkedList.Node getCurrentPlayer() {
     return currentPlayer;
   }
-
+  /**
+   * @param currentPlayer set the current player
+   **/
   public void setCurrentPlayer(GameDoublyLinkedList.Node currentPlayer) {
     this.currentPlayer = currentPlayer;
   }
-
+  /**The current player's turn **/
   public GameDoublyLinkedList.Node currentPlayer;
 
 
@@ -43,9 +47,9 @@ public class UnoGame {
   }
 
   /******************************************************************************
-   * @param currentColor set current color in play
+   * @param currentCard set current color in play
    ******************************************************************************/
-  public void setCurrentCard(Colors currentColor) {
+  public void setCurrentCard(Card currentCard) {
     this.currentCard = currentCard;
   }
 
@@ -82,7 +86,7 @@ public class UnoGame {
     List<Card> decks = deckController.getBaseDeck();
 //
 //    /** the linked list represents the turn order of the game**/
-    GameDoublyLinkedList list = new GameDoublyLinkedList();
+    GameDoublyLinkedList list = uno.turnController;
 //
     /** test player 1**/
     Player player1 = new Player("Bob");
@@ -115,6 +119,13 @@ public class UnoGame {
 
   }
 
+  /******************************************************************************
+   Checks the current card being played for the type of action it is and then
+   executes the action
+
+   @param card The card to check the action of
+   @param deck The current draw pile deck
+   ******************************************************************************/
   public void checkForActionEvent(Card card, List<Card> deck) {
 
     if (card.getAction() != null) {
@@ -174,37 +185,59 @@ public class UnoGame {
     return Colors.NONE;
   }
 
+  /******************************************************************************
+   * The player's actions when it is their turn
+   * @param player
+   ******************************************************************************/
   public void playerTurn(Player player) {
+    int count = 0;
+    boolean played = true;
     System.out.println("The top card is: " + currentCard.toString());
 
     System.out.println("The cards in your hand are:");
 
-    for(int i = 0; i < player.hand.size(); i++) {
+    for(int i = count; i < player.hand.size(); i++) {
       System.out.println((i +1) + ". " + player.hand.get(i).toString());
+      count++;
     }
+    count++;
+    System.out.println(count + ". " + "Draw a card");
 
-    System.out.println("Which card would you like to play? ");
-    Scanner in = new Scanner(System.in);
-    int selection = in.nextInt();
 
-    Card playedCard = player.hand.get((selection-1));
-    if(checkPlay(playedCard)){
-      deckController.discard.add(playedCard);
-      player.hand.remove(selection-1);
+    while(played) {
+      System.out.println("Please pick a card to play or draw a card.");
+      Scanner in = new Scanner(System.in);
+      int selection = in.nextInt();
 
-      if (playedCard.getAction() != null) {
-        checkForActionEvent(playedCard, deckController.getBaseDeck());
-      }
-      System.out.println("Your new hand is: ");
+      if (selection == count){
+        deckController.dealCard(deckController.getBaseDeck(), player.hand, 1);
+        played = false;
 
-      for(int i = 0; i < player.hand.size(); i++) {
-        System.out.println((i+1) + ". " + player.hand.get(i).toString());
-      }
+      } else if (checkPlay(player.hand.get(selection - 1))) {
+
+        Card playedCard = player.hand.get(selection - 1);
+        deckController.discard.add(playedCard);
+        player.hand.remove(selection - 1);
+        this.setCurrentCard(playedCard);
+
+        if (playedCard.getAction() != null) {
+          checkForActionEvent(playedCard, deckController.getBaseDeck());
+        }
+        System.out.println("Your new hand is: ");
+
+        for (int i = 0; i < player.hand.size(); i++) {
+          System.out.println((i + 1) + ". " + player.hand.get(i).toString());
+        }
+
+        played = false;
+      } else
+        System.out.println("Not playable");
     }
-    else
-      System.out.println("Not playable");
   }
-
+  /******************************************************************************
+   Check to see if the last card played was a valid play
+   @param playedCard the card that was last played
+   ******************************************************************************/
   public boolean checkPlay(Card playedCard) {
 
     if (playedCard.getAction() == null) {
