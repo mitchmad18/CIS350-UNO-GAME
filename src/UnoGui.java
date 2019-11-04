@@ -13,6 +13,9 @@ public class UnoGui extends JPanel implements ActionListener {
     private JMenu file;
     private JMenuItem reset, exit;
     private JButton btnDrawCard;
+    private JButton btnChooseCard;
+    private JButton btnMoveRight;
+    private JButton btnMoveLeft;
     private JPanel panel;
 
     //Variables for the rules dialog box
@@ -67,8 +70,35 @@ public class UnoGui extends JPanel implements ActionListener {
         //Sets up the discard pile
         JLabel blankUnoCardLabel = new JLabel();
         blankUnoCardLabel.setIcon(blankUnoCard);
+        c.gridx = 2;
+        c.gridy = 0;
         blankUnoCardLabel.setPreferredSize(new Dimension(70,100));
-        panel.add(blankUnoCardLabel);
+        panel.add(blankUnoCardLabel,c);
+
+        //Cards in the player's hand
+        btnChooseCard = new JButton();
+        c.gridx = 1;
+        c.gridy = 2;
+        btnChooseCard.addActionListener(this);
+        btnChooseCard.setPreferredSize(new Dimension(70,100));
+        btnChooseCard.setIcon(blankUnoCard);
+        panel.add(btnChooseCard,c);
+
+        //Left Arrow Button
+        btnMoveLeft = new JButton("<--");
+        c.gridx = 0;
+        c.gridy = 2;
+        btnMoveLeft.addActionListener(this);
+        btnMoveLeft.setPreferredSize(new Dimension(70,50));
+        panel.add(btnMoveLeft,c);
+
+        //Right Arrow Button
+        btnMoveRight = new JButton("-->");
+        c.gridx = 2;
+        c.gridy = 2;
+        btnMoveRight.addActionListener(this);
+        btnMoveRight.setPreferredSize(new Dimension(70,50));
+        panel.add(btnMoveRight,c);
 
         f.getContentPane().add(panel);
         f.setVisible(true);
@@ -83,6 +113,12 @@ public class UnoGui extends JPanel implements ActionListener {
             f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
         if(e.getSource()==btnDrawCard)
             System.out.println("You drew a card.");
+        if(e.getSource()==btnChooseCard)
+            System.out.println("You picked a card from your hand");
+        if(e.getSource()==btnMoveRight)
+            System.out.println("move right");
+        if(e.getSource()==btnMoveLeft)
+            System.out.println("move left");
     }
     public static void main(String[] args) {
         new UnoGui();
