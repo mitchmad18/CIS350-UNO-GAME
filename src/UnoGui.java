@@ -17,6 +17,7 @@ public class UnoGui extends JPanel implements ActionListener {
     private JButton btnMoveRight;
     private JButton btnMoveLeft;
     private JPanel panel;
+    private RulesDialog rDialog;
 
     //Variables for the rules dialog box
     private Integer[] optionsNumOfCardsDealt = new Integer[] {5,6,7,8,9,10};
@@ -31,6 +32,8 @@ public class UnoGui extends JPanel implements ActionListener {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
+
+        rDialog = new RulesDialog(f);
 
         reset=new JMenuItem("New Game");
         exit=new JMenuItem("Exit");
