@@ -13,23 +13,20 @@ import java.util.Random;
 
 public class DeckController {
 
-  /**
-   * An empty array that will represent the base starting deck of Uno
-   **/
-  private List<Card> baseDeck = new ArrayList();
-
-  /**
-   * An empty array that will represent the discard deck of the game
-   **/
-  public List<Card> discard = new ArrayList();
-
-
+  // An empty array that will represent the base starting deck of Uno
+  private List<Card> baseDeck;
+  // An empty array that will represent the discard deck of the game
+  public List<Card> discard;
 
   /******************************************************************************
    * Default constructor that will already have the discard and base deck, then it
    * will set the direction to the right.
    ******************************************************************************/
   public DeckController() {
+    baseDeck = new ArrayList<Card>();
+    discard = new ArrayList<Card>();
+    startDeck();
+    add
   }
 
   /******************************************************************************
@@ -124,4 +121,6 @@ public class DeckController {
     }
 
   }
+
+
 }

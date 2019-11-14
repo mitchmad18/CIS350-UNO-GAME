@@ -1,4 +1,9 @@
-import java.util.Iterator;
+import CardInfo.ActionCard;
+import CardInfo.Card;
+import CardInfo.Colors;
+import CardInfo.DeckController;
+import GameInfo.Player;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -105,7 +110,7 @@ public class UnoGame {
     GameDoublyLinkedList.Node currentPlayer = list.head;
 
     do {
-      deckController.dealCard(decks, currentPlayer.player.hand, 7);
+      deckController.dealCard(decks, currentPlayer.player.playerHand, 7);
       currentPlayer = currentPlayer.next;
     }
     while(currentPlayer != list.head);
@@ -133,7 +138,7 @@ public class UnoGame {
       switch (card.getAction()) {
 
         case DRAWTWO:
-          deckController.dealCard(deck, currentPlayer.next.player.hand, 2);
+          deckController.dealCard(deck, currentPlayer.next.player.playerHand, 2);
           break;
         case SKIP:
           setCurrentPlayer(skip(currentPlayer, direction));
@@ -148,7 +153,7 @@ public class UnoGame {
           break;
         case WILDFOUR:
           currentCard.setColor(wildAction());
-          deckController.dealCard(deck, currentPlayer.next.player.hand, 4);
+          deckController.dealCard(deck, currentPlayer.next.player.playerHand, 4);
           break;
       }
     }
@@ -196,8 +201,8 @@ public class UnoGame {
 
     System.out.println("The cards in your hand are:");
 
-    for(int i = count; i < player.hand.size(); i++) {
-      System.out.println((i +1) + ". " + player.hand.get(i).toString());
+    for(int i = count; i < player.playerHand.size(); i++) {
+      System.out.println((i +1) + ". " + player.playerHand.get(i).toString());
       count++;
     }
     count++;
@@ -210,14 +215,14 @@ public class UnoGame {
       int selection = in.nextInt();
 
       if (selection == count){
-        deckController.dealCard(deckController.getBaseDeck(), player.hand, 1);
+        deckController.dealCard(deckController.getBaseDeck(), player.playerHand, 1);
         played = false;
 
-      } else if (checkPlay(player.hand.get(selection - 1))) {
+      } else if (checkPlay(player.playerHand.get(selection - 1))) {
 
-        Card playedCard = player.hand.get(selection - 1);
+        Card playedCard = player.playerHand.get(selection - 1);
         deckController.discard.add(playedCard);
-        player.hand.remove(selection - 1);
+        player.playerHand.remove(selection - 1);
         this.setCurrentCard(playedCard);
 
         if (playedCard.getAction() != null) {
@@ -225,8 +230,8 @@ public class UnoGame {
         }
         System.out.println("Your new hand is: ");
 
-        for (int i = 0; i < player.hand.size(); i++) {
-          System.out.println((i + 1) + ". " + player.hand.get(i).toString());
+        for (int i = 0; i < player.playerHand.size(); i++) {
+          System.out.println((i + 1) + ". " + player.playerHand.get(i).toString());
         }
 
         played = false;
@@ -262,13 +267,13 @@ public class UnoGame {
 //   * @param player
 //   * @param deckController
 //   ******************************************************************************/
-//  private static void printPlayers(DeckController deckController, List<Card> player) {
+//  private static void printPlayers(CardInfo.DeckController deckController, List<CardInfo.Card> player) {
 //    try {
 //      Iterator var2 = player.iterator();
 //
 //      while (true) {
 //        while (var2.hasNext()) {
-//          Card card = (Card) var2.next();
+//          CardInfo.Card card = (CardInfo.Card) var2.next();
 //          if (card.getColor() != null && card.getAction() == null) {
 //            System.out.println(card.getColor() + " " + card.getNumber());
 //          } else {
