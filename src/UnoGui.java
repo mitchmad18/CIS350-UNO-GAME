@@ -23,6 +23,10 @@ public class UnoGui extends JPanel implements ActionListener {
     private JRadioButton stackDraw2Yes = new JRadioButton("Yes");
     private JButton stackDraw2No = new JButton("No");
 
+    private UnoGame unoGame;
+    private DeckController deckController = unoGame.deckController;
+
+
     private UnoGui(){
         f=new JFrame("Uno Game");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,7 +57,7 @@ public class UnoGui extends JPanel implements ActionListener {
 
         GridBagConstraints c = new GridBagConstraints();
 
-        ImageIcon blankUnoCard = new ImageIcon("C:/Users/madie/Documents/GitHub/CIS350-UNO-GAME/src/resources/blankUnoCardSmall.png");
+        ImageIcon blankUnoCard = new ImageIcon("src/resources/blankUnoCardSmall.png");
 
         //Sets up the draw pile
         btnDrawCard = new JButton();
@@ -65,10 +69,10 @@ public class UnoGui extends JPanel implements ActionListener {
         panel.add(btnDrawCard,c);
 
         //Sets up the discard pile
-        JLabel blankUnoCardLabel = new JLabel();
-        blankUnoCardLabel.setIcon(blankUnoCard);
-        blankUnoCardLabel.setPreferredSize(new Dimension(70,100));
-        panel.add(blankUnoCardLabel);
+//        JLabel blankUnoCardLabel = new JLabel();
+//        blankUnoCardLabel.setIcon(blankUnoCard);
+//        blankUnoCardLabel.setPreferredSize(new Dimension(70,100));
+//        panel.add(blankUnoCardLabel);
 
         f.getContentPane().add(panel);
         f.setVisible(true);
@@ -93,6 +97,7 @@ public class UnoGui extends JPanel implements ActionListener {
         JOptionPane.showConfirmDialog(null,
                 dialogOptions, "New Game", JOptionPane.DEFAULT_OPTION);
     }
+
 
     private void drawCard() {
 

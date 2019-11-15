@@ -16,14 +16,12 @@ public class DeckController {
   /**
    * An empty array that will represent the base starting deck of Uno
    **/
-  private List<Card> baseDeck = new ArrayList();
+  private List<Card> drawPile = new ArrayList();
 
   /**
    * An empty array that will represent the discard deck of the game
    **/
   public List<Card> discard = new ArrayList();
-
-
 
   /******************************************************************************
    * Default constructor that will already have the discard and base deck, then it
@@ -35,15 +33,15 @@ public class DeckController {
   /******************************************************************************
    * @return The base deck of UNO
    ******************************************************************************/
-  public List<Card> getBaseDeck() {
-    return this.baseDeck;
+  public List<Card> getDrawPile() {
+    return this.drawPile;
   }
 
   /******************************************************************************
    * @return checks whether the base deck is empty (this may change in the future)
    ******************************************************************************/
   private boolean isEmpty() {
-    return this.baseDeck.size() == 0;
+    return this.drawPile.size() == 0;
   }
 
   /******************************************************************************
@@ -52,11 +50,10 @@ public class DeckController {
    ******************************************************************************/
   private void addToDeck(Card card) {
     if (this.isEmpty()) {
-      this.baseDeck.add(card);
+      this.drawPile.add(card);
     } else {
-      this.baseDeck.add(card);
+      this.drawPile.add(card);
     }
-
   }
 
   /******************************************************************************

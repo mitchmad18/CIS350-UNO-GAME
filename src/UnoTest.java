@@ -12,6 +12,6 @@ public class UnoTest {
     controller.startDeck();
 //    controller.dealCard(controller.getBaseDeck(), hand);
 
-    assertEquals(107, controller.getBaseDeck().size());
+    assertEquals(107, controller.getDrawPile().size());
   }
 }

@@ -61,25 +61,25 @@ public class GameDoublyLinkedList extends LinkedList {
 
   }
 
-  /******************************************************************************
-   * Show all the players of a doubly linked list. Prints out the tail's next
-   * to show that it does in fact go in a circle
-   ******************************************************************************/
-  public void display() {
-    Node current = this.head;
-    if (this.head == null) {
-      System.out.println("List is empty");
-    } else {
-      System.out.println("Nodes of the circular linked list: ");
-
-      do {
-        System.out.print(current.player.name + " ");
-        current = current.next;
-      } while (current != this.head);
-
-      System.out.println();
-    }
-
-    System.out.println(current.player.name);
-  }
+//  /******************************************************************************
+//   * Show all the players of a doubly linked list. Prints out the tail's next
+//   * to show that it does in fact go in a circle
+//   ******************************************************************************/
+//  public void display() {
+//    Node current = this.head;
+//    if (this.head == null) {
+//      System.out.println("List is empty");
+//    } else {
+//      System.out.println("Nodes of the circular linked list: ");
+//
+//      do {
+//        System.out.print(current.player.name + " ");
+//        current = current.next;
+//      } while (current != this.head);
+//
+//      System.out.println();
+//    }
+//
+//    System.out.println(current.player.name);
+//  }
 }

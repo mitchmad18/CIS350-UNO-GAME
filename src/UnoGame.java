@@ -1,4 +1,3 @@
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,15 +13,15 @@ public class UnoGame {
   /**
    * The control handler for player rotation
    **/
-  public GameDoublyLinkedList turnController = new GameDoublyLinkedList();
+  private GameDoublyLinkedList turnController = new GameDoublyLinkedList();
   /**
    * The direction the game
    **/
-  public Direction direction = Direction.RIGHT;
+  private Direction direction = Direction.RIGHT;
   /**
    * The current card in play
    **/
-  public Card currentCard;
+  private Card currentCard;
   /**
    * @return the current player
    **/
@@ -32,11 +31,11 @@ public class UnoGame {
   /**
    * @param currentPlayer set the current player
    **/
-  public void setCurrentPlayer(GameDoublyLinkedList.Node currentPlayer) {
+  private void setCurrentPlayer(GameDoublyLinkedList.Node currentPlayer) {
     this.currentPlayer = currentPlayer;
   }
   /**The current player's turn **/
-  public GameDoublyLinkedList.Node currentPlayer;
+  private GameDoublyLinkedList.Node currentPlayer;
 
 
   /******************************************************************************
@@ -74,50 +73,50 @@ public class UnoGame {
   /******************************************************************************
    * The main method is used to test the functionality of the rest of the classes.
    ******************************************************************************/
-  public static void main(String[] args) {
-
-    UnoGame uno = new UnoGame();
-    DeckController deckController = UnoGame.deckController;
-//    /** The deck controller handles the movement between decks and cards**/
-    deckController.startDeck();
-    deckController.shuffleDeck(deckController.getBaseDeck());
+//  public static void  main(String[] args) {
 //
-//    /** Poorly named, but the decks card is the base deck of UNO**/
-    List<Card> decks = deckController.getBaseDeck();
+//    UnoGame uno = new UnoGame();
+//    DeckController deckController = UnoGame.deckController;
+////    /** The deck controller handles the movement between decks and cards**/
+//    deckController.startDeck();
+//    deckController.shuffleDeck(deckController.getBaseDeck());
+////
+////    /** Poorly named, but the decks card is the base deck of UNO**/
+//    List<Card> decks = deckController.getBaseDeck();
+////
+////    /** the linked list represents the turn order of the game**/
+//    GameDoublyLinkedList list = uno.turnController;
+////
+//    /** test player 1**/
+//    Player player1 = new Player("Bob");
+//    /** test player 2**/
+//    Player player2 = new Player("Char");
+//    /** test player 3**/
+//    Player player3 = new Player("Pika");
+//    /** test player 4**/
+//    Player player4 = new Player("Squir");
 //
-//    /** the linked list represents the turn order of the game**/
-    GameDoublyLinkedList list = uno.turnController;
+//    list.add(player1);
+//    list.add(player2);
+//    list.add(player3);
+//    list.add(player4);
 //
-    /** test player 1**/
-    Player player1 = new Player("Bob");
-    /** test player 2**/
-    Player player2 = new Player("Char");
-    /** test player 3**/
-    Player player3 = new Player("Pika");
-    /** test player 4**/
-    Player player4 = new Player("Squir");
-
-    list.add(player1);
-    list.add(player2);
-    list.add(player3);
-    list.add(player4);
-
-    GameDoublyLinkedList.Node currentPlayer = list.head;
-
-    do {
-      deckController.dealCard(decks, currentPlayer.player.hand, 7);
-      currentPlayer = currentPlayer.next;
-    }
-    while(currentPlayer != list.head);
-
-    uno.setCurrentPlayer(list.head);
-
-    Card card = new Card(Colors.BLUE, ActionCard.SKIP);
-    deckController.discard.add(card);
-    uno.currentCard = card;
-    uno.playerTurn(currentPlayer.player);
-
-  }
+//    GameDoublyLinkedList.Node currentPlayer = list.head;
+//
+//    do {
+//      deckController.dealCard(decks, currentPlayer.player.hand, 7);
+//      currentPlayer = currentPlayer.next;
+//    }
+//    while(currentPlayer != list.head);
+//
+//    uno.setCurrentPlayer(list.head);
+//
+//    Card card = new Card(Colors.BLUE, ActionCard.SKIP);
+//    deckController.discard.add(card);
+//    uno.currentCard = card;
+//    uno.playerTurn(currentPlayer.player);
+//
+//  }
 
   /******************************************************************************
    Checks the current card being played for the type of action it is and then
@@ -181,7 +180,6 @@ public class UnoGame {
         return Colors.YELLOW;
 
     }
-
     return Colors.NONE;
   }
 
@@ -189,7 +187,7 @@ public class UnoGame {
    * The player's actions when it is their turn
    * @param player
    ******************************************************************************/
-  public void playerTurn(Player player) {
+  public void turnControl(Player player) {
     int count = 0;
     boolean played = true;
     System.out.println("The top card is: " + currentCard.toString());
@@ -203,14 +201,13 @@ public class UnoGame {
     count++;
     System.out.println(count + ". " + "Draw a card");
 
-
     while(played) {
       System.out.println("Please pick a card to play or draw a card.");
       Scanner in = new Scanner(System.in);
       int selection = in.nextInt();
 
       if (selection == count){
-        deckController.dealCard(deckController.getBaseDeck(), player.hand, 1);
+        deckController.dealCard(deckController.getDrawPile(), player.hand, 1);
         played = false;
 
       } else if (checkPlay(player.hand.get(selection - 1))) {
@@ -221,7 +218,7 @@ public class UnoGame {
         this.setCurrentCard(playedCard);
 
         if (playedCard.getAction() != null) {
-          checkForActionEvent(playedCard, deckController.getBaseDeck());
+          checkForActionEvent(playedCard, deckController.getDrawPile());
         }
         System.out.println("Your new hand is: ");
 
@@ -250,10 +247,6 @@ public class UnoGame {
         return true;
       else return playedCard.getAction() == currentCard.getAction();
     }
-  }
-
-  public void computerTurn() {
-
   }
 
 //
