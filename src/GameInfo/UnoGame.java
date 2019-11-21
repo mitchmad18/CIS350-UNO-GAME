@@ -1,8 +1,9 @@
+package GameInfo;
+
 import CardInfo.ActionCard;
 import CardInfo.Card;
 import CardInfo.Colors;
 import CardInfo.DeckController;
-import GameInfo.Player;
 
 import java.util.List;
 import java.util.Scanner;

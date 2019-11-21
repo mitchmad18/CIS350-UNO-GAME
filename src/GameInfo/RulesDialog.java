@@ -1,4 +1,4 @@
-import javafx.scene.control.RadioButton;
+package GameInfo;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,3 +1,4 @@
+package CardInfo;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -26,7 +27,7 @@ public class DeckController {
     baseDeck = new ArrayList<Card>();
     discard = new ArrayList<Card>();
     startDeck();
-    add
+
   }
 
   /******************************************************************************

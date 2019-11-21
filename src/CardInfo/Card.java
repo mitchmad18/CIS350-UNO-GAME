@@ -1,3 +1,4 @@
+package CardInfo;
 /******************************************************************************
  * Card class is used to create a UNO card object. The object will represent the
  * color, number, and action of each card.

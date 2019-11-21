@@ -1,5 +1,5 @@
 // REFILL ONCE GUI RUNNING.
-
+package GameInfo;
 public class AI extends Player {
 
     /******************************************************************************

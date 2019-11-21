@@ -1,5 +1,4 @@
-import GameInfo.Player;
-
+package GameInfo;
 import java.util.LinkedList;
 
 /******************************************************************************
