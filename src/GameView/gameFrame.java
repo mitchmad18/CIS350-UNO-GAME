@@ -4,6 +4,7 @@ import Interface.gameConstants;
 import gameControl.gameController;
 
 import javax.swing.*;
+import java.awt.*;
 
 /******************************************************************************
  * The gameFrame class represents the main frame of the game its panels
@@ -30,6 +31,21 @@ public class gameFrame extends JFrame implements gameConstants {
 
         gamePanel = gameController.getSession();
         add(gamePanel);
+
+        setJMenuBar(GameView.menuBar.setUpMenu());
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
