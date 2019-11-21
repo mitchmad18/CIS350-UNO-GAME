@@ -13,35 +13,34 @@ import java.util.Random;
 
 public class DeckController {
 
-  /**
-   * An empty array that will represent the base starting deck of Uno
-   **/
-  private List<Card> drawPile = new ArrayList();
-
-  /**
-   * An empty array that will represent the discard deck of the game
-   **/
-  public List<Card> discard = new ArrayList();
+  // An empty array that will represent the base starting deck of Uno
+  private List<Card> baseDeck;
+  // An empty array that will represent the discard deck of the game
+  public List<Card> discard;
 
   /******************************************************************************
    * Default constructor that will already have the discard and base deck, then it
    * will set the direction to the right.
    ******************************************************************************/
   public DeckController() {
+    baseDeck = new ArrayList<Card>();
+    discard = new ArrayList<Card>();
+    startDeck();
+    add
   }
 
   /******************************************************************************
    * @return The base deck of UNO
    ******************************************************************************/
-  public List<Card> getDrawPile() {
-    return this.drawPile;
+  public List<Card> getBaseDeck() {
+    return this.baseDeck;
   }
 
   /******************************************************************************
    * @return checks whether the base deck is empty (this may change in the future)
    ******************************************************************************/
   private boolean isEmpty() {
-    return this.drawPile.size() == 0;
+    return this.baseDeck.size() == 0;
   }
 
   /******************************************************************************
@@ -50,10 +49,11 @@ public class DeckController {
    ******************************************************************************/
   private void addToDeck(Card card) {
     if (this.isEmpty()) {
-      this.drawPile.add(card);
+      this.baseDeck.add(card);
     } else {
-      this.drawPile.add(card);
+      this.baseDeck.add(card);
     }
+
   }
 
   /******************************************************************************
@@ -121,4 +121,6 @@ public class DeckController {
     }
 
   }
+
+
 }
