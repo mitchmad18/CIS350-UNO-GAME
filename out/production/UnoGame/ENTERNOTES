@@ -1,0 +1,30 @@
+/******************************************************************************
+ * The This file will contain project notes and ideas for others to view upon
+ pulling from GITHUB. Please enter notes well formatted under your name only.
+ NOTE: It is important this file is to be deleted before submission.
+ ******************************************************************************/
+
+ TONAE NOTES:
+ - Add in JPanel tool bar with (Quit Game, New Game Restart)
+ - Server removed. Test in Manual, will later implement multiplayer with only A.I to save time.
+ - ** FOR NOW PLAY IN MANUAL ONLY**. Keep running game and finding bugs
+   to be fixed. Make note of them here.
+ - After functionality bugs fixed(most part) reimplement AI.
+ - After AI fixed and running, modify game to request user input to
+   support 2-4 player across gameController.
+ - After fully functioning on both ends hide cards of AI players
+ - Re-empliment rules dialog into tool bar and game start with following the selection of game settings.
+   So basically fix welcome screen
+ - Add thorough testing
+ - Add new javadocs?
+ - Maybe add step timer
+ - Maybe keep manual mode with cards visual for user purposes
+
+ -Specfic bug notes:
+ - Turn changing bug
+ - Prompt user only not AI to set wild color not working - also make color choose for both wilds?
+ - Fix reverse card symbol
+ - Add perform wild action game controller
+ PRATTY NOTES:
+
+ MYREN NOTES:
