@@ -1,6 +1,5 @@
 package GameView;
 
-import javafx.scene.control.RadioButton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

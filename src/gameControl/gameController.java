@@ -1,13 +1,14 @@
 package gameControl;
 
 import CardModel.wildCard;
-import GameView.card;
 import GameModel.Player;
 import GameModel.unoGame;
+import GameView.card;
 import GameView.gameSession;
 import Interface.gameConstants;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -92,7 +93,7 @@ public class gameController implements gameConstants {
                 game.removeCardPlayed(cardClicked);
 
                 // Action card check //
-                if (cardClicked.getType() == ACTION) {
+                if (cardClicked.getType() == ACTION || cardClicked.getType() == WILD) {
                     performActionCard(cardClicked);
                 }
 
@@ -178,11 +179,11 @@ public class gameController implements gameConstants {
         else if (cardPlayed.getType() == WILD)
             return true;
 
-//        else if(topCard.getType() == WILD){
-//            Color color = ((wildCard)topCard).getWildColor();
-//            if(color.equals(cardPlayed.getColor()))
-//                return true;
-//        }
+        else if(topCard.getType() == WILD){
+            Color color = ((wildCard)topCard).getWildColor();
+            if(color.equals(cardPlayed.getColor()))
+                return true;
+        }
 
         return false;
     }
@@ -201,26 +202,34 @@ public class gameController implements gameConstants {
             game.changeTurn();
         else if (action.getValue().equals(WCOLORPICK)) {
             if (gameMode == 1 && game.isAITurn()) {
+                //TODO: Have AI select color based on highest color count in their hand
                 int random = new Random().nextInt() % 4;
                 ((wildCard) action).setWildColor(cardCOLORS[Math.abs(random)]);
             } else {
 
-                ArrayList<String> colors = new ArrayList<String>();
-                colors.add("RED");
-                colors.add("YELLOW");
-                colors.add("GREEN");
-                colors.add("BLUE");
-
-                String colorPicked = (String) JOptionPane.showInputDialog(null,
-                        "Choose card color", "WILD CARD: ",
-                        JOptionPane.DEFAULT_OPTION, null, colors.toArray(), null);
-                ((wildCard) action).setWildColor(cardCOLORS[colors.indexOf(colorPicked)]);
-                System.out.println("Here");
+                ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
             }
 
-        } else if (action.getValue().equals(WDRAW4))
-            game.drawPlus(4);
+        } else if (action.getValue().equals(WDRAW4)) {
 
+            ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
+            game.drawPlus(4);
+        }
+
+    }
+
+    public int pickColor() {
+        ArrayList<String> colors = new ArrayList<String>();
+        colors.add("RED");
+        colors.add("YELLOW");
+        colors.add("GREEN");
+        colors.add("BLUE");
+
+        String colorPicked = (String) JOptionPane.showInputDialog(null,
+                "Choose card color", "WILD CARD: ",
+                JOptionPane.DEFAULT_OPTION, null, colors.toArray(), null);
+
+        return colors.indexOf(colorPicked);
     }
 
     /******************************************************************************
