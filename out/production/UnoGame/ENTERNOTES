@@ -25,6 +25,13 @@
  - Prompt user only not AI to set wild color not working - also make color choose for both wilds?
  - Fix reverse card symbol
  - Add perform wild action game controller
+
+ - Rules dialog:
+ - Mode -jcombo drop down
+ - Card num
+ - stack draw twos (check box form)
+ - set up as welcome screen
+
  PRATTY NOTES:
 
  MYREN NOTES:
