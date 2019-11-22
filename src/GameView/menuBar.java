@@ -3,6 +3,7 @@ package GameView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 /******************************************************************************
  * The menuBar class creates the different parts of the top menu bar
@@ -13,12 +14,12 @@ import java.awt.event.ActionListener;
  ******************************************************************************/
 public class menuBar extends JFrame implements ActionListener {
 
-    // Menu bar
+    // Menu barf
     private static JMenuBar mb;
     // Menus displayed in the menu bar
-    protected static JMenu mainMenu, settingsMenu;
+    protected static JMenu mainMenu;
     // Options listed under the menu
-    private static JMenuItem quitItem, newGameItem, restartItem;
+    private static JMenuItem quitItem, newGameItem;
     // Action performed key number
     private int item;
 
@@ -29,22 +30,17 @@ public class menuBar extends JFrame implements ActionListener {
         mb = new JMenuBar();
 
         mainMenu = new JMenu("Menu");
-        settingsMenu = new JMenu("Settings");
 
         quitItem = new JMenuItem("Quit Game");
         newGameItem = new JMenuItem("New Game");
-        restartItem = new JMenuItem("Restart");
 
         quitItem.addActionListener(new menuBar(1));
         newGameItem.addActionListener(new menuBar(2));
-        restartItem.addActionListener(new menuBar(3));
 
         mainMenu.add(quitItem);
         mainMenu.add(newGameItem);
-        mainMenu.add(restartItem);
 
         mb.add(mainMenu);
-        mb.add(settingsMenu);
 
         return mb;
     }
@@ -68,9 +64,14 @@ public class menuBar extends JFrame implements ActionListener {
         }
         else if(this.item==2){
             System.out.println("New Game");
-        }
-        else if(this.item==3){
-            System.out.println("restart");
+
+            //start a new frame
+            JFrame frame = new gameFrame();
+            frame.setVisible(true);
+            frame.setResizable(false);
+            frame.setLocation(200, 100);
+            frame.pack();
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
     }
 }
