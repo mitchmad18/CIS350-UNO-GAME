@@ -37,20 +37,19 @@ public class AI extends Player implements gameConstants {
     public boolean play(card topCard) {
         boolean done = false;
         final Color currentColor;
-
         final String value = topCard.getValue();
+        final int type = topCard.getType();
 
         if (topCard.getType() == WILD) {
             currentColor = ((wildCard) topCard).getWildColor();
-        }
-        else
+        } else
             currentColor = topCard.getColor();
 
 
-        List<card> tempHand = getPlayerHand().stream().filter(c -> (c.getType() == topCard.getType() && c.getType() != unoConstants.NUMBERS)||
+        List<card> tempHand = getPlayerHand().stream().filter(c -> (c.getType() == type && c.getValue().equals(value)) ||
                 c.getColor() == currentColor || c.getValue().equals(value)).collect(Collectors.toList());
 
-        if(tempHand.stream().findFirst().isPresent()) {
+        if (tempHand.stream().findFirst().isPresent()) {
 
             try {
                 List<card> filterHand = tempHand.stream().filter(c -> c.getType() == card.ACTION).collect(Collectors.toList());
@@ -72,9 +71,10 @@ public class AI extends Player implements gameConstants {
         // if no card was found, play wild card
         if (!done) {
 
-            tempHand = getPlayerHand().stream().filter(c -> c.getType() == unoConstants.WILD ).collect(Collectors.toList());
-            if(tempHand.stream().findFirst().isPresent()) {
+            tempHand = getPlayerHand().stream().filter(c -> c.getType() == unoConstants.WILD).collect(Collectors.toList());
+            if (tempHand.stream().findFirst().isPresent()) {
                 computerPressCard(tempHand.get(0));
+                done = true;
             }
         }
 
@@ -89,14 +89,14 @@ public class AI extends Player implements gameConstants {
         MouseEvent doPress = new MouseEvent(card, MouseEvent.MOUSE_PRESSED,
                 System.currentTimeMillis(),
                 (int) MouseEvent.MOUSE_EVENT_MASK, 5, 5, 1, true);
-                card.dispatchEvent(doPress);
 
+        card.dispatchEvent(doPress);
 
         MouseEvent doRelease = new MouseEvent(card, MouseEvent.MOUSE_RELEASED,
                 System.currentTimeMillis(),
                 (int) MouseEvent.MOUSE_EVENT_MASK, 5, 5, 1, true);
+
         card.dispatchEvent(doRelease);
 
     }
-
 }

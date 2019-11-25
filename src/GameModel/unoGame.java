@@ -167,10 +167,7 @@ public class unoGame implements gameConstants {
      * @return - true if AI can make a move - else false.
      ******************************************************************************/
     public boolean isAITurn() {
-        if (AI.isPlayerTurn())
-            return true;
-
-        return false;
+        return AI.isPlayerTurn();
     }
 
     /******************************************************************************

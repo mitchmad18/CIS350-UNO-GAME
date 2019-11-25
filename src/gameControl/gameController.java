@@ -86,6 +86,7 @@ public class gameController implements gameConstants {
      * @param cardClicked - card selected by player.
      ******************************************************************************/
     public void playCard(card cardClicked) {
+        System.out.println(cardClicked.toString());
         // If not player turn - Alert //
         if (!isPlayerTurn(cardClicked)) {
             updatePanel.setError("Sorry, not your turn");
@@ -110,6 +111,7 @@ public class gameController implements gameConstants {
                 // Switch player turn //
                 game.changeTurn();
                 session.updatePanel(cardClicked);
+                session.refreshPanel();
                 getResults();
 
             } else {
@@ -125,8 +127,6 @@ public class gameController implements gameConstants {
                 session.refreshPanel();
             }
         }
-
-        System.out.println(cardClicked.toString());
     }
 
     /******************************************************************************
@@ -201,6 +201,7 @@ public class gameController implements gameConstants {
         return false;
     }
 
+    //TODO: REMOVE AI FROM THIS SECTION AND ADD IT TO PLAYAI METHOD
     /******************************************************************************
      * Method to control TYPE: ACTION cards played only.
      * @param action - card action
@@ -221,7 +222,6 @@ public class gameController implements gameConstants {
                 int random = new Random().nextInt() % 4;
                 ((wildCard) action).setWildColor(cardCOLORS[Math.abs(random)]);
             } else {
-
                 ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
             }
 

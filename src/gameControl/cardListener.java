@@ -39,6 +39,7 @@ public class cardListener extends MouseAdapter {
         try {
             if (gController.canPlay())
                 gController.playCard(source);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
