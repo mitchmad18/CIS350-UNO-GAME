@@ -94,5 +94,4 @@ public class gameSession extends JPanel {
         table.revalidate();
         revalidate();
     }
-
 }

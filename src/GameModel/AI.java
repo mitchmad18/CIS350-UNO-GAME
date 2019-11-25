@@ -1,7 +1,14 @@
 package GameModel;
 
+import CardModel.wildCard;
 import GameView.card;
 import Interface.gameConstants;
+import Interface.unoConstants;
+
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.util.stream.Collectors;
+import java.util.List;
 
 /******************************************************************************
  * The AI class serves as artificial intelligence player of the game. This
@@ -29,58 +36,89 @@ public class AI extends Player implements gameConstants {
      ******************************************************************************/
     public boolean play(card topCard) {
         boolean done = false;
+        final Color currentColor;
+
+        final String value = topCard.getValue();
+
+        if (topCard.getType() == WILD) {
+            currentColor = ((wildCard) topCard).getWildColor();
+        }
+        else
+            currentColor = topCard.getColor();
+
+
+        List<card> tempHand = getPlayerHand().stream().filter(c -> (c.getType() == topCard.getType() && c.getType() != unoConstants.NUMBERS)||
+                c.getColor() == currentColor || c.getValue().equals(value)).collect(Collectors.toList());
+
+        if(tempHand.stream().findFirst().isPresent()) {
+
+            try {
+                List<card> filterHand = tempHand.stream().filter(c -> c.getType() == card.ACTION).collect(Collectors.toList());
+
+                if (filterHand.stream().findFirst().isPresent()) {
+                    computerPressCard(filterHand.get(0));
+
+                } else {
+                    computerPressCard(tempHand.get(0));
+                }
+
+                done = true;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+//            for (card card : tempHand) {
 //
-//        Color color = topCard.getColor();
-//        String value = topCard.getValue();
+//                if(card.getType() == ACTION ) {
+//                    computerPressCard(card);
+//                    done = true;
+//                    break;
+//                }
 //
-//        if(topCard.getType()==WILD){
-//            color = ((wildCard) topCard).getWildColor();
-//        }
-//
-//        for (card card : getPlayerHand()) {
-//
-//            if (card.getColor().equals(color) || card.getValue().equals(value)) {
-//
-//                MouseEvent doPress = new MouseEvent(card, MouseEvent.MOUSE_PRESSED,
-//                        System.currentTimeMillis(),
-//                        (int) MouseEvent.MOUSE_EVENT_MASK, 5, 5, 1, true);
-//                card.dispatchEvent(doPress);
-//
-//                MouseEvent doRelease = new MouseEvent(card, MouseEvent.MOUSE_RELEASED,
-//                        System.currentTimeMillis(),
-//                        (int) MouseEvent.MOUSE_EVENT_MASK, 5, 5, 1, true);
-//                card.dispatchEvent(doRelease);
-//
-//                done = true;
-//                break;
-//            }
-//        }
-//
-//        // if no card was found, play wild card
-//        if (!done) {
-//            for (card card : getPlayerHand()) {
-//                if (card.getType() == WILD) {
-//                    MouseEvent doPress = new MouseEvent(card,
-//                            MouseEvent.MOUSE_PRESSED,
-//                            System.currentTimeMillis(),
-//                            (int) MouseEvent.MOUSE_EVENT_MASK, 5, 5, 1, true);
-//                    card.dispatchEvent(doPress);
-//
-//                    MouseEvent doRelease = new MouseEvent(card, MouseEvent.MOUSE_RELEASED,
-//                            System.currentTimeMillis(),
-//                            (int) MouseEvent.MOUSE_EVENT_MASK, 5, 5, 1, true);
-//                    card.dispatchEvent(doRelease);
-//
+//                if (card.getColor().equals(currentColor) || card.getValue().equals(value)) {
+//                    computerPressCard(card);
 //                    done = true;
 //                    break;
 //                }
 //            }
-//        }
-//
-//        if(getPlayerHandTotal()==1 || getPlayerHandTotal()==2)
-//            setSayUNO(true);
-//
+
+        // if no card was found, play wild card
+        if (!done) {
+
+            tempHand = getPlayerHand().stream().filter(c -> c.getType() == unoConstants.WILD ).collect(Collectors.toList());
+            if(tempHand.stream().findFirst().isPresent())
+                computerPressCard(tempHand.get(0));
+        }
+//            for (card card : getPlayerHand()) {
+//                if (card.getType() == WILD) {
+//                    computerPressCard(card);
+//                    done = true;
+//                    break;
+//                }
+//            }
+
+
+        if (getPlayerHandTotal() == 1 || getPlayerHandTotal() == 2)
+            setSayUNO(true);
+
+
         return done;
+    }
+
+    public void computerPressCard(card card) {
+        MouseEvent doPress = new MouseEvent(card, MouseEvent.MOUSE_PRESSED,
+                System.currentTimeMillis(),
+                (int) MouseEvent.MOUSE_EVENT_MASK, 5, 5, 1, true);
+                card.dispatchEvent(doPress);
+
+
+        MouseEvent doRelease = new MouseEvent(card, MouseEvent.MOUSE_RELEASED,
+                System.currentTimeMillis(),
+                (int) MouseEvent.MOUSE_EVENT_MASK, 5, 5, 1, true);
+        card.dispatchEvent(doRelease);
+
     }
 
 }

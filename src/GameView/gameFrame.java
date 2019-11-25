@@ -31,5 +31,4 @@ public class gameFrame extends JFrame implements gameConstants {
         gamePanel = gameController.getSession();
         add(gamePanel);
     }
-
 }

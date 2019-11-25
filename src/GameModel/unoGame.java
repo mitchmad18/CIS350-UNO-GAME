@@ -99,16 +99,20 @@ public class unoGame implements gameConstants {
      ******************************************************************************/
     public void drawCard(card topCard) {
         boolean canPlay = false;
+
         for (Player p : players) {
             if (p.isPlayerTurn()) {
                 card newCard = getCard();
                 p.drawCard(newCard);
                 canPlay = canPlay(topCard, newCard);
+                System.out.println(p.getName() + " drew " + newCard.toString());
                 break;
             }
         }
         if (!canPlay)
             changeTurn();
+        else
+            playAI(topCard);
     }
 
     /******************************************************************************
@@ -132,7 +136,7 @@ public class unoGame implements gameConstants {
         for (Player p : players) {
             if (p.isPlayerTurn()) {
                 updatePanel.updateText(p.getName() + "'s Turn");
-                System.out.println(p.getName() + "'s Turn");
+                System.out.println(p.getName() + "'s Turn. Hand Count: " + p.getPlayerHandTotal());
             }
         }
         updatePanel.setDetail(cardsPlayedSize(), cardsRemaining());
@@ -168,8 +172,9 @@ public class unoGame implements gameConstants {
         if (AI.isPlayerTurn()) {
             boolean done = AI.play(topCard);
 
-            if (!done)
+            if (!done) {
                 drawCard(topCard);
+            }
         }
     }
 

@@ -76,7 +76,6 @@ public class cardDealer implements gameConstants {
         } catch (Exception var4) {
             System.out.println("NO cards to shuffle. All cards are gone.");
         }
-
     }
 
     /******************************************************************************

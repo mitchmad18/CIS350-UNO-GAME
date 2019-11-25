@@ -101,6 +101,7 @@ public class gameController implements gameConstants {
                 game.changeTurn();
                 session.updatePanel(cardClicked);
                 getResults();
+
             } else {
                 updatePanel.setError("Sorry, invalid move");
                 updatePanel.repaint();
@@ -109,10 +110,13 @@ public class gameController implements gameConstants {
 
         // Play for AI //
         if (gameMode == AIMode && canPlay()) {
-            if (game.isAITurn())
+            if (game.isAITurn()) {
                 game.playAI(peekTopCard());
-
+                session.refreshPanel();
+            }
         }
+
+        System.out.println(cardClicked.toString());
     }
 
     /******************************************************************************
@@ -181,8 +185,7 @@ public class gameController implements gameConstants {
 
         else if(topCard.getType() == WILD){
             Color color = ((wildCard)topCard).getWildColor();
-            if(color.equals(cardPlayed.getColor()))
-                return true;
+            return color.equals(cardPlayed.getColor());
         }
 
         return false;
@@ -202,7 +205,6 @@ public class gameController implements gameConstants {
             game.changeTurn();
         else if (action.getValue().equals(WCOLORPICK)) {
             if (gameMode == 1 && game.isAITurn()) {
-                //TODO: Have AI select color based on highest color count in their hand
                 int random = new Random().nextInt() % 4;
                 ((wildCard) action).setWildColor(cardCOLORS[Math.abs(random)]);
             } else {
@@ -215,7 +217,6 @@ public class gameController implements gameConstants {
             ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
             game.drawPlus(4);
         }
-
     }
 
     public int pickColor() {
@@ -240,9 +241,11 @@ public class gameController implements gameConstants {
         game.drawCard(peekTopCard());
 
         if (gameMode == AIMode && canPlay()) {
-            if (game.isAITurn())
+            if (game.isAITurn()) {
                 game.playAI(peekTopCard());
+            }
         }
+
         session.refreshPanel();
     }
 
@@ -268,5 +271,4 @@ public class gameController implements gameConstants {
     public void returnSaidUNO() {
         game.setSaidUNO();
     }
-
 }

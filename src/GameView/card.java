@@ -169,5 +169,9 @@ public abstract class card extends JPanel implements cardInterface, unoConstants
         return type;
     }
 
+    @Override
+    public String toString() {
+        return this.cColor.toString() + "/" + this.cValue + "/" + this.getType();
+    }
 
 }
