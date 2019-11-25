@@ -69,36 +69,14 @@ public class AI extends Player implements gameConstants {
             }
         }
 
-//            for (card card : tempHand) {
-//
-//                if(card.getType() == ACTION ) {
-//                    computerPressCard(card);
-//                    done = true;
-//                    break;
-//                }
-//
-//                if (card.getColor().equals(currentColor) || card.getValue().equals(value)) {
-//                    computerPressCard(card);
-//                    done = true;
-//                    break;
-//                }
-//            }
-
         // if no card was found, play wild card
         if (!done) {
 
             tempHand = getPlayerHand().stream().filter(c -> c.getType() == unoConstants.WILD ).collect(Collectors.toList());
-            if(tempHand.stream().findFirst().isPresent())
+            if(tempHand.stream().findFirst().isPresent()) {
                 computerPressCard(tempHand.get(0));
+            }
         }
-//            for (card card : getPlayerHand()) {
-//                if (card.getType() == WILD) {
-//                    computerPressCard(card);
-//                    done = true;
-//                    break;
-//                }
-//            }
-
 
         if (getPlayerHandTotal() == 1 || getPlayerHandTotal() == 2)
             setSayUNO(true);

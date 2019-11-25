@@ -57,6 +57,15 @@ public class unoGame implements gameConstants {
         gameOver = false;
     }
 
+    public void recreateDealer() {
+        dealer = new cardDealer();
+        cardStack = dealer.shuffle();
+        for (Player p : players) {
+            p.playerHand.clear();
+        }
+        dealer.dealCards(players);
+    }
+
     /******************************************************************************
      * This method retrieves the players of this game instance.
      * @return - players.

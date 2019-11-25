@@ -6,6 +6,7 @@ import GameModel.unoGame;
 import GameView.card;
 import GameView.gameSession;
 import Interface.gameConstants;
+import Interface.unoConstants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +45,13 @@ public class gameController implements gameConstants {
 
         // First card on discard pile //
         card firstCard = game.getCard();
+        if(firstCard.getType() == unoConstants.WILD) {
+            while(firstCard.getType() == unoConstants.WILD) {
+                game.recreateDealer();
+                firstCard = game.getCard();
+            }
+        }
+
         changeFirstCard(firstCard);
         cardsPlayed.add(firstCard);
         session = new gameSession(game, firstCard);
@@ -201,10 +209,13 @@ public class gameController implements gameConstants {
 
         if (action.getValue().equals(DRAW2))
             game.drawPlus(2);
+
         else if (action.getValue().equals(REVERSE))
             game.changeTurn();
+
         else if (action.getValue().equals(SKIP))
             game.changeTurn();
+
         else if (action.getValue().equals(WCOLORPICK)) {
             if (gameMode == 1 && game.isAITurn()) {
                 int random = new Random().nextInt() % 4;
