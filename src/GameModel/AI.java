@@ -85,6 +85,11 @@ public class AI extends Player implements gameConstants {
         return done;
     }
 
+    /******************************************************************************
+     * Creates the pressing action for the computer.
+     *
+     * @param  card - card for play comparision.
+     * ******************************************************************************/
     public void computerPressCard(card card) {
         MouseEvent doPress = new MouseEvent(card, MouseEvent.MOUSE_PRESSED,
                 System.currentTimeMillis(),
@@ -98,5 +103,58 @@ public class AI extends Player implements gameConstants {
 
         card.dispatchEvent(doRelease);
 
+    }
+
+    /******************************************************************************
+     * The computer is picking it's wild color based on the color that it has the most
+     * of in its hand, as that is the normal strategy. The colorToReturn numbers refer to
+     * the order the colors are from this list:
+     *     Color[] cardCOLORS = {RED, YELLOW, GREEN, BLUE};
+     * @return int - the color that the AI is choosing for the wild color
+     * ******************************************************************************/
+    public int pickWildColor() {
+        int blue = 0;
+        int yellow = 0;
+        int red = 0;
+        int green = 0;
+        int colorToReturn = 0;
+        int max = 0;
+
+        for (card currentCard : getPlayerHand()) {
+            if (currentCard.getColor().equals(unoConstants.RED)) {
+                red++;
+                if(red > max) {
+                    max = red;
+                    colorToReturn = 0;
+                }
+            }
+
+            if (currentCard.getColor().equals(unoConstants.YELLOW)) {
+                yellow++;
+                if(yellow > max) {
+                    max = yellow;
+                    colorToReturn = 1;
+                }
+            }
+
+            if (currentCard.getColor().equals(unoConstants.GREEN)) {
+                green++;
+                if(green > max) {
+                    max = green;
+                    colorToReturn = 2;
+                }
+            }
+
+            if (currentCard.getColor().equals(unoConstants.BLUE)) {
+                blue++;
+                if(blue > max) {
+                    max = blue;
+                    colorToReturn = 3;
+                }
+            }
+        }
+
+        System.out.println("AI's colors: blue - " + blue + " green - " + green + " red - " + red + " yellow - " + yellow);
+        return colorToReturn;
     }
 }

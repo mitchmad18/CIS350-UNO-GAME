@@ -184,6 +184,13 @@ public class unoGame implements gameConstants {
         }
     }
 
+    public int playAIWild() {
+        if(AI.isPlayerTurn()) {
+            return AI.pickWildColor();
+        } else
+            return -1;
+    }
+
     /******************************************************************************
      * This method returns the cards remaining in the shuffled deck.
      * @return - cards remaining for play.

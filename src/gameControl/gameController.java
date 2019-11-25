@@ -201,7 +201,6 @@ public class gameController implements gameConstants {
         return false;
     }
 
-    //TODO: REMOVE AI FROM THIS SECTION AND ADD IT TO PLAYAI METHOD
     /******************************************************************************
      * Method to control TYPE: ACTION cards played only.
      * @param action - card action
@@ -219,15 +218,17 @@ public class gameController implements gameConstants {
 
         else if (action.getValue().equals(WCOLORPICK)) {
             if (gameMode == 1 && game.isAITurn()) {
-                int random = new Random().nextInt() % 4;
-                ((wildCard) action).setWildColor(cardCOLORS[Math.abs(random)]);
+                ((wildCard) action).setWildColor(cardCOLORS[game.playAIWild()]);
             } else {
                 ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
             }
 
         } else if (action.getValue().equals(WDRAW4)) {
-
-            ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
+            if (gameMode == 1 && game.isAITurn()) {
+                ((wildCard) action).setWildColor(cardCOLORS[game.playAIWild()]);
+            } else {
+                ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
+            }
             game.drawPlus(4);
         }
     }
