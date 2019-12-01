@@ -9,7 +9,7 @@ import java.awt.*;
  * be implemented to identify number cards from other card types.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class numCard extends card {
@@ -28,5 +28,4 @@ public class numCard extends card {
     public numCard(Color cColor, String cValue) {
         super(cColor, NUMBERS, cValue);
     }
-
 }

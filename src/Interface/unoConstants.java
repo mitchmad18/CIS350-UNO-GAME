@@ -6,7 +6,7 @@ import java.awt.*;
  * The unoConstants represents the specifics of each card type.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public interface unoConstants {

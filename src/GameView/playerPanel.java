@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * screen.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class playerPanel extends JPanel implements gameConstants {

@@ -11,7 +11,7 @@ import java.awt.*;
  * cards discarded.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class tablePanel extends JPanel implements gameConstants {

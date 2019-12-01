@@ -13,7 +13,7 @@ import java.io.IOException;
  * The gameSession class controls a session of the game created.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class gameSession extends JPanel {

@@ -15,7 +15,7 @@ import java.util.List;
  * class is to be played against the user.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class AI extends Player implements gameConstants {

@@ -9,19 +9,13 @@ import java.awt.*;
  * be implemented to identify wild cards from other card types.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class wildCard extends card {
 
     // Variable to set game color //
     private Color setColor;
-
-    /******************************************************************************
-     * Empty default class constructor to get card TYPE.
-     ******************************************************************************/
-    public wildCard() {
-    }
 
     /******************************************************************************
      * Default class constructor with params.

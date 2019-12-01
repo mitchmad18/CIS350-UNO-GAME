@@ -10,7 +10,7 @@ import java.util.List;
  * keep track of the player's name and hand which is represented in an array.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class Player {

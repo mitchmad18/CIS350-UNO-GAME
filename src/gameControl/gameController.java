@@ -12,14 +12,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /******************************************************************************
  * The gameController class serves as the main control of the game. This class
  * sets the rules to be followed by players and controls.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class gameController implements gameConstants {
@@ -27,7 +26,7 @@ public class gameController implements gameConstants {
     // Boolean to control player moves //
     private boolean canPlay;
     // Uno game instance //
-    private unoGame game;
+    public unoGame game;
     // Uno game session instance //
     private gameSession session;
     // Represents cards of discard pile //
@@ -52,7 +51,7 @@ public class gameController implements gameConstants {
             }
         }
 
-        changeFirstCard(firstCard);
+        //changeFirstCard(firstCard);
         cardsPlayed.add(firstCard);
         session = new gameSession(game, firstCard);
 
@@ -78,8 +77,6 @@ public class gameController implements gameConstants {
 
         return gameModes[n];
     }
-
-
 
     /******************************************************************************
      * Method to control the play of cards within the game.
@@ -134,17 +131,17 @@ public class gameController implements gameConstants {
      * ** TO BE CORRECTED TO REPLACE WITH card not of TYPE:WILD**
      * @param firstCard - first card on discard pile.
      ******************************************************************************/
-    private void changeFirstCard(card firstCard) {
-        firstCard.removeMouseListener(CARDLISTEN);
-        if (firstCard.getType() == WILD) {
-            int random = new Random().nextInt() % 4;
-            try {
-                ((wildCard) firstCard).setWildColor(cardCOLORS[Math.abs(random)]);
-            } catch (Exception e) {
-                System.out.print("Something went wrong changing first card");
-            }
-        }
-    }
+//    private void changeFirstCard(card firstCard) {
+//        firstCard.removeMouseListener(CARDLISTEN);
+//        if (firstCard.getType() == WILD) {
+//            int random = new Random().nextInt() % 4;
+//            try {
+//                ((wildCard) firstCard).setWildColor(cardCOLORS[Math.abs(random)]);
+//            } catch (Exception e) {
+//                System.out.print("Something went wrong changing first card");
+//            }
+//        }
+//    }
 
     /******************************************************************************
      * Method to get the current game session.

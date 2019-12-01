@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
  * MouseAdapter, which will receive all mouse events on the game board.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class cardListener extends MouseAdapter {

@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
  * to be set up and displayed.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class gameFrame extends JFrame implements gameConstants, ActionListener {

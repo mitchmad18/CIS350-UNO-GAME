@@ -9,7 +9,7 @@ import java.awt.*;
  * be implemented to identify action cards from other card types.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class actionCard extends card {
@@ -29,5 +29,4 @@ public class actionCard extends card {
         super(cColor, ACTION, actionValue);
 
     }
-
 }

@@ -13,7 +13,7 @@ import java.util.Random;
  * to deal cards from the deck to the players.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class cardDealer implements gameConstants {

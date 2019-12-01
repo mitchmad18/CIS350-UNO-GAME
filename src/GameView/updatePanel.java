@@ -7,7 +7,7 @@ import java.awt.*;
  * The updatePanel represents the panel of game updates.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class updatePanel extends JPanel {

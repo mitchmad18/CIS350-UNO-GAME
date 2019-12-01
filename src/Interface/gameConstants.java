@@ -11,7 +11,7 @@ import java.awt.*;
  * card.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public interface gameConstants extends unoConstants {
@@ -41,5 +41,4 @@ public interface gameConstants extends unoConstants {
     int[] gameModes = {AIMode, manualMode};
     // Update panel //
     updatePanel updatePanel = new updatePanel();
-
 }

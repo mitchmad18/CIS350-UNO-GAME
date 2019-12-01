@@ -12,7 +12,7 @@ import java.util.List;
  * and etc.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class unoGame implements gameConstants {

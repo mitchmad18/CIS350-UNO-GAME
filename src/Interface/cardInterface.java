@@ -6,7 +6,7 @@ import java.awt.*;
  * The cardInterface interface represents the properties of each card.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public interface cardInterface {

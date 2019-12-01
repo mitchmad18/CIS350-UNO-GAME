@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  *
  * ** CLASS TO BE FIXED AND IMPLEMENTED **
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public class rulesDialog extends JDialog implements ActionListener {

@@ -16,7 +16,7 @@ import java.awt.geom.AffineTransform;
  * each card.
  *
  * @author TonyChanelle
- * @author add name
+ * @author Pratty Hongsyvilay
  * @author add name
  ******************************************************************************/
 public abstract class card extends JPanel implements cardInterface, unoConstants {
