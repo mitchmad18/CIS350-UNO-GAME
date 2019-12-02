@@ -51,21 +51,16 @@ public class AI extends Player implements gameConstants {
 
         if (tempHand.stream().findFirst().isPresent()) {
 
-            try {
-                List<card> filterHand = tempHand.stream().filter(c -> c.getType() == card.ACTION).collect(Collectors.toList());
+            List<card> filterHand = tempHand.stream().filter(c -> c.getType() == card.ACTION).collect(Collectors.toList());
 
-                if (filterHand.stream().findFirst().isPresent()) {
-                    computerPressCard(filterHand.get(0));
+            if (filterHand.stream().findFirst().isPresent()) {
+                computerPressCard(filterHand.get(0));
 
-                } else {
-                    computerPressCard(tempHand.get(0));
-                }
-
-                done = true;
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
+                computerPressCard(tempHand.get(0));
             }
+
+            done = true;
         }
 
         // if no card was found, play wild card
@@ -117,7 +112,7 @@ public class AI extends Player implements gameConstants {
         int yellow = 0;
         int red = 0;
         int green = 0;
-        int colorToReturn = 0;
+        int colorToReturn = -1;
         int max = 0;
 
         for (card currentCard : getPlayerHand()) {

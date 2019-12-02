@@ -18,15 +18,15 @@ import java.util.List;
 public class unoGame implements gameConstants {
 
     // Card deck shuffled - ready //
-    private static List<card> cardStack;
+    List<card> cardStack;
     // Players of game //
     private Player[] players;
     // Game mode //
-    private int gameMODE;
+    int gameMODE;
     // AI instance //
-    private AI AI;
+    AI AI;
     // Card dealer instance //
-    private cardDealer dealer;
+    cardDealer dealer;
     // game check //
     private boolean gameOver;
 
@@ -95,7 +95,7 @@ public class unoGame implements gameConstants {
                     updatePanel.setError(p.getName() + " Forgot to say UNO");
                     p.drawCard(getCard());
                     p.drawCard(getCard());
-                } else if (p.getPlayerHandTotal() > 2) {
+                } else if (p.getPlayerHandTotal() > 1) {
                     p.setSayUNO(false);
                 }
             }
@@ -185,10 +185,7 @@ public class unoGame implements gameConstants {
     }
 
     public int playAIWild() {
-        if(AI.isPlayerTurn()) {
-            return AI.pickWildColor();
-        } else
-            return -1;
+        return AI.pickWildColor();
     }
 
     /******************************************************************************

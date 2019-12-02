@@ -10,7 +10,7 @@ import org.junit.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class gameModelTests {
+public class AIModelTests {
     private static AI ai;
     private List<card> fakeHand = new ArrayList<>();
 
@@ -118,5 +118,7 @@ public class gameModelTests {
         int wildNumber = ai.pickWildColor();
         Assert.assertEquals(3, wildNumber);
     }
+
+
 
 }

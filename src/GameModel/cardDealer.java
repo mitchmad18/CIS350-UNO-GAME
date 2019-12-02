@@ -19,9 +19,9 @@ import java.util.Random;
 public class cardDealer implements gameConstants {
 
     // Card deck instance - start deck//
-    private cardDeck deck;
+    public cardDeck deck;
     // Shuffled deck ready for play use //
-    private List<card> cardStack;
+    List<card> cardStack;
 
     /******************************************************************************
      * Empty default class constructor.
@@ -36,7 +36,7 @@ public class cardDealer implements gameConstants {
      * ******************************************************************************/
     public List<card> shuffle() {
         List<card> startDeck = deck.getBaseDeck();
-        List<card> shuffledDeck = new ArrayList<card>();
+        List<card> shuffledDeck = new ArrayList<>();
 
         while (!startDeck.isEmpty()) {
             int deckTotal = startDeck.size();
