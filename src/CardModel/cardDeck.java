@@ -18,14 +18,14 @@ import java.util.List;
  ******************************************************************************/
 public class cardDeck implements gameConstants {
 
-    // Represents the base starting deck of Uno //
-    private List<card> baseDeck;
     // Represents the number cards added to the base deck of Uno //
     private final List<numCard> numberCards;
     // Represents the action cards added to the base deck of Uno //
     private final List<actionCard> actionCards;
     // Represents the wild cards added to the base deck of Uno //
     private final List<wildCard> wildCards;
+    // Represents the base starting deck of Uno //
+    private List<card> baseDeck;
 
     /******************************************************************************
      * Empty default class constructor creating card deck on call.

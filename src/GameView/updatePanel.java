@@ -15,7 +15,11 @@ public class updatePanel extends JPanel {
     // Uno game user - player //
     private int user;
     // Uno game AI - player //
-    private int AI;
+    private int A1;
+    // Uno game AI - player //
+    private int A2;
+    // Uno game AI - player //
+    private int A3;
     // Uno game  //
     private int rest;
     // Uno game error messages //
@@ -24,6 +28,8 @@ public class updatePanel extends JPanel {
     private String text;
     // Update panels center //
     private int panelCenter;
+    // //
+    private int gMODE = -1;
 
     /******************************************************************************
      * Default class constructor.
@@ -95,22 +101,37 @@ public class updatePanel extends JPanel {
 
         // Determines word width for position
         String text = "Cards Played";
+        String extraText = "";
         int xPos = panelCenter - fm.stringWidth(text) / 2;
         g.setFont(newFont);
-        g.drawString(text, xPos, 120);
+        g.drawString(text, xPos, 115);
 
         text = "Remaining: " + rest;
         xPos = panelCenter - fm.stringWidth(text) / 2;
-        g.drawString(text, xPos, 180);
+        g.drawString(text, xPos, 190);
 
         // Detail
         newFont = new Font("Calibri", Font.PLAIN, 20);
         g.setFont(newFont);
         fm = this.getFontMetrics(newFont);
 
-        text = "You : " + user + " PC : " + AI;
+        if (gMODE == 1) {
+            text = "You : " + user + "  AI(1) : " + A1;
+
+        } else if (gMODE == 2) {
+            text = "You : " + user + "  AI(1) : " + A1;
+            extraText = "AI(2) : " + A2;
+
+        } else if (gMODE == 3) {
+            text = "You : " + user + "  AI(1) : " + A1;
+            extraText = "AI(2) : " + A2 + "  AI(3) : " + A3;
+        }
         xPos = panelCenter - fm.stringWidth(text) / 2;
         g.drawString(text, xPos, 140);
+
+        xPos = panelCenter - fm.stringWidth(extraText) / 2;
+        g.drawString(extraText, xPos, 165);
+
 
         text = String.valueOf(rest);
         xPos = panelCenter - fm.stringWidth(text) / 2;
@@ -139,10 +160,27 @@ public class updatePanel extends JPanel {
      * @param remaining - cards remaining in game deck.
      ******************************************************************************/
     public void setDetail(int[] playedCards, int remaining) {
-        user = playedCards[1];
-        AI = playedCards[0];
-        rest = remaining;
 
+        if (gMODE == 1) {
+            user = playedCards[0];
+            A1 = playedCards[1];
+            rest = remaining;
+        } else if (gMODE == 2) {
+            user = playedCards[0];
+            A1 = playedCards[1];
+            A2 = playedCards[2];
+            rest = remaining;
+        } else if (gMODE == 3) {
+            user = playedCards[0];
+            A1 = playedCards[1];
+            A2 = playedCards[2];
+            A3 = playedCards[3];
+            rest = remaining;
+        }
+    }
+
+    public void setgMODE(int mode) {
+        gMODE = mode;
     }
 
 }

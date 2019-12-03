@@ -107,7 +107,7 @@ public class Player {
      * This method turns game to next player. Like toggle function.
      ******************************************************************************/
     public void nextPlayerTurn() {
-        isPlayerTurn = (isPlayerTurn) ? false : true;
+        isPlayerTurn = !isPlayerTurn;
     }
 
     /******************************************************************************
@@ -119,11 +119,18 @@ public class Player {
     }
 
     /******************************************************************************
+     *
+     ******************************************************************************/
+    public void setPlayerTurn(boolean turn) {
+        isPlayerTurn = turn;
+    }
+
+    /******************************************************************************
      * This method is checks if a players hand is empty.
      * @return - true if players hand is empty - else false.
      ******************************************************************************/
     public boolean hasCards() {
-        return playerHand.isEmpty() ? false : true;
+        return !playerHand.isEmpty();
     }
 
     /******************************************************************************

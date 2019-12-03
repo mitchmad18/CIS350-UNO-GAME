@@ -40,6 +40,14 @@ public class buttonListener implements ActionListener {
             gController.returnSaidUNO();
     }
 
+    /******************************************************************************
+     * Implement for mult - only works mode 1
+     ******************************************************************************/
+    public void skip() {
+        if (gController.canPlay())
+            gController.sendSkip();
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
     }

@@ -32,19 +32,19 @@ public class wildCard extends card {
     }
 
     /******************************************************************************
-     * Method to set game color when prompted for WILD CARD.
-     * @param wColor - game card color.
-     ******************************************************************************/
-    public void setWildColor(Color wColor) {
-        setColor = wColor;
-    }
-
-    /******************************************************************************
      * Method to get game color for WILD CARD.
      * @return - color chosen for game.
      ******************************************************************************/
     public Color getWildColor() {
         return setColor;
+    }
+
+    /******************************************************************************
+     * Method to set game color when prompted for WILD CARD.
+     * @param wColor - game card color.
+     ******************************************************************************/
+    public void setWildColor(Color wColor) {
+        setColor = wColor;
     }
 
 }

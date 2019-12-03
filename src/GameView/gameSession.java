@@ -22,12 +22,18 @@ public class gameSession extends JPanel {
     private unoGame game;
     // Player 1 //
     private playerPanel p1;
-    // Player 2 // - Add more with multi player
-    private playerPanel p2;
+    // Player 2 //
+    private AIPanel a2;
+    // Player 3 //
+    private AIPanel a3;
+    // Player 4 //
+    private AIPanel a4;
     // Uno game table //
     private tablePanel table;
     // Uno game background //
     private BufferedImage img;
+    // //
+    private Box gameLayout;
 
     /******************************************************************************
      * Default class constructor creating game session.
@@ -35,25 +41,51 @@ public class gameSession extends JPanel {
      * @param firstCard - first card on discard pile.
      ******************************************************************************/
     public gameSession(unoGame newGame, card firstCard) {
-
         try {
             img = ImageIO.read(new File("src/resources/background.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        gameLayout = Box.createHorizontalBox();
         setPreferredSize(new Dimension(960, 720));
         setLayout(new BorderLayout());
         game = newGame;
         table = new tablePanel(firstCard);
         setPlayers();
-        p1.setOpaque(false);
-        p2.setOpaque(false);
 
-        add(p1, BorderLayout.NORTH);
-        add(table, BorderLayout.CENTER);
-        add(p2, BorderLayout.SOUTH);
+        if (game.getGameMode() == 1) {
 
+            p1.setOpaque(false);
+            a2.setOpaque(false);
+            add(p1, BorderLayout.SOUTH);
+            add(table, BorderLayout.CENTER);
+            gameLayout.add(a2);
+            add(gameLayout, BorderLayout.NORTH);
+        } else if (game.getGameMode() == 2) {
+
+            p1.setOpaque(false);
+            a2.setOpaque(false);
+            a3.setOpaque(false);
+            add(p1, BorderLayout.SOUTH);
+            add(table, BorderLayout.CENTER);
+            gameLayout.add(a2);
+            gameLayout.add(a3);
+            add(gameLayout, BorderLayout.NORTH);
+
+        } else if (game.getGameMode() == 3) {
+
+            p1.setOpaque(false);
+            a2.setOpaque(false);
+            a3.setOpaque(false);
+            a4.setOpaque(false);
+            add(p1, BorderLayout.SOUTH);
+            add(table, BorderLayout.CENTER);
+            gameLayout.add(a2);
+            gameLayout.add(a3);
+            gameLayout.add(a4);
+            add(gameLayout, BorderLayout.NORTH);
+        }
     }
 
     /******************************************************************************
@@ -72,8 +104,19 @@ public class gameSession extends JPanel {
      * ** TO BE CORRECTED FOR MULTI-PLAYER IMPLEMENTATION **
      ******************************************************************************/
     private void setPlayers() {
-        p1 = new playerPanel(game.getPlayers()[0]);
-        p2 = new playerPanel(game.getPlayers()[1]);
+        if (game.getGameMode() == 1) {
+            p1 = new playerPanel(game.getPlayers()[0]);
+            a2 = new AIPanel(game.getPlayers()[1]);
+        } else if (game.getGameMode() == 2) {
+            p1 = new playerPanel(game.getPlayers()[0]);
+            a2 = new AIPanel(game.getPlayers()[1]);
+            a3 = new AIPanel(game.getPlayers()[2]);
+        } else if (game.getGameMode() == 3) {
+            p1 = new playerPanel(game.getPlayers()[0]);
+            a2 = new AIPanel(game.getPlayers()[1]);
+            a3 = new AIPanel(game.getPlayers()[2]);
+            a4 = new AIPanel(game.getPlayers()[3]);
+        }
     }
 
     /******************************************************************************
@@ -89,8 +132,10 @@ public class gameSession extends JPanel {
      * This method is used to refresh panels with updates.
      ******************************************************************************/
     public void refreshPanel() {
-        p1.setUpCards();
-        p2.setUpCards();
+        if (game.getGameMode() == 1) {
+            p1.setUpCards();
+            // a2.setUpCards();
+        }
         table.revalidate();
         revalidate();
     }

@@ -1,7 +1,7 @@
 package GameView;
 
-import Interface.unoConstants;
 import Interface.cardInterface;
+import Interface.unoConstants;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -102,29 +102,6 @@ public abstract class card extends JPanel implements cardInterface, unoConstants
     }
 
     /******************************************************************************
-     * This private class serves as the listener for each card created.
-     ******************************************************************************/
-    class MouseHandler extends MouseAdapter {
-        public void mouseEntered(MouseEvent e) {
-            setBorder(focBorder);
-        }
-
-        public void mouseExited(MouseEvent e) {
-            setBorder(defBorder);
-        }
-    }
-
-
-    /******************************************************************************
-     * This method sets the color of the card created.
-     * @param color - card color.
-     ******************************************************************************/
-    @Override
-    public void setColor(Color color) {
-        this.cColor = color;
-    }
-
-    /******************************************************************************
      * This method gets the color of the card created.
      * @return - card color.
      ******************************************************************************/
@@ -134,12 +111,12 @@ public abstract class card extends JPanel implements cardInterface, unoConstants
     }
 
     /******************************************************************************
-     * This method sets the value of the card created.
-     * @param cValue - card value.
+     * This method sets the color of the card created.
+     * @param color - card color.
      ******************************************************************************/
     @Override
-    public void setValue(String cValue) {
-        this.cValue = cValue;
+    public void setColor(Color color) {
+        this.cColor = color;
     }
 
     /******************************************************************************
@@ -152,12 +129,12 @@ public abstract class card extends JPanel implements cardInterface, unoConstants
     }
 
     /******************************************************************************
-     * This method sets the type of the card created.
-     * @param type - card type.
+     * This method sets the value of the card created.
+     * @param cValue - card value.
      ******************************************************************************/
     @Override
-    public void setType(int type) {
-        this.type = type;
+    public void setValue(String cValue) {
+        this.cValue = cValue;
     }
 
     /******************************************************************************
@@ -169,9 +146,31 @@ public abstract class card extends JPanel implements cardInterface, unoConstants
         return type;
     }
 
+    /******************************************************************************
+     * This method sets the type of the card created.
+     * @param type - card type.
+     ******************************************************************************/
+    @Override
+    public void setType(int type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return this.cColor.toString() + "/" + this.cValue + "/" + this.getType();
+    }
+
+    /******************************************************************************
+     * This private class serves as the listener for each card created.
+     ******************************************************************************/
+    class MouseHandler extends MouseAdapter {
+        public void mouseEntered(MouseEvent e) {
+            setBorder(focBorder);
+        }
+
+        public void mouseExited(MouseEvent e) {
+            setBorder(defBorder);
+        }
     }
 
 }

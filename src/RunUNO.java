@@ -1,4 +1,5 @@
 import GameView.gameFrame;
+
 import javax.swing.*;
 
 public class RunUNO {
@@ -8,11 +9,11 @@ public class RunUNO {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new gameFrame();
-                frame.setVisible(true);
                 frame.setResizable(false);
-                frame.setLocation(200, 100);
+                frame.setLocation(0, 0);
                 frame.pack();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
             }
         });
     }

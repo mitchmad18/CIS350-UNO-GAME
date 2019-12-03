@@ -5,6 +5,7 @@ import GameModel.Player;
 import GameModel.unoGame;
 import GameView.card;
 import GameView.gameSession;
+import GameView.welcomeDialog;
 import Interface.gameConstants;
 import Interface.unoConstants;
 
@@ -34,19 +35,24 @@ public class gameController implements gameConstants {
     private List<card> cardsPlayed;
     // Represents mode of game //
     private int gameMode;
+    // Welcome dialog //
+    private welcomeDialog welcome;
+    // Welcome dialog data //
+    private String[] data = new String[4];
+    private JFrame p;
 
     /******************************************************************************
      * Empty default class constructor
      ******************************************************************************/
-    public gameController() {
-        gameMode = requestMode();
-        game = new unoGame(gameMode);
+    public gameController(JFrame parent) {
+        welcomeSetUp(parent);
+        p = parent;
         cardsPlayed = new ArrayList<card>();
 
         // First card on discard pile //
         card firstCard = game.getCard();
-        if(firstCard.getType() == unoConstants.WILD) {
-            while(firstCard.getType() == unoConstants.WILD) {
+        if (firstCard.getType() == unoConstants.WILD) {
+            while (firstCard.getType() == unoConstants.WILD) {
                 game.recreateDealer();
                 firstCard = game.getCard();
             }
@@ -66,19 +72,24 @@ public class gameController implements gameConstants {
      * option. *TO BE CORRECTED for multi-AI ONLY**
      * @return - mode of game.
      ******************************************************************************/
-    private int requestMode() {
-        Object[] options = {"vs A.I.", "Manual", "Cancel"};
-        int n = JOptionPane.showOptionDialog(null,
-                "Choose a Game Mode to play", "Game Mode",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options, options[0]);
+    private void welcomeSetUp(JFrame parent) {
+        welcome = new welcomeDialog(parent);
+        data = welcome.run();
 
-        if (n == 2)
-            System.exit(1);
+        // Game mode // Fix game mode entry set up only 1(AI) & 2(MANUAL) work but
+        // wrong for now //
+        try {
+            // Game Mode - num of A.I players //
+            gameMode = Integer.parseInt(data[0]);
 
-        return gameModes[n];
+            // Instantiate new game after mode entered //
+            game = new unoGame(gameMode, Integer.parseInt(data[1]), data[2], data[3], this);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Error 1");
+        }
+
     }
-
 
 
     /******************************************************************************
@@ -121,16 +132,18 @@ public class gameController implements gameConstants {
         }
 
         // Play for AI //
-        if (gameMode == AIMode && canPlay()) {
+        if (canPlay()) {
+            System.out.println("Here1");
             if (game.isAITurn()) {
+                System.out.println("Here2");
                 game.playAI(peekTopCard());
                 session.refreshPanel();
+                System.out.println("Here3");
             }
         }
     }
 
-    /******************************************************************************
-     * Method to set color of WILD card if first on discard pile.
+    /******************************************************************************     * Method to set color of WILD card if first on discard pile.
      * ** TO BE CORRECTED TO REPLACE WITH card not of TYPE:WILD**
      * @param firstCard - first card on discard pile.
      ******************************************************************************/
@@ -186,6 +199,7 @@ public class gameController implements gameConstants {
     public boolean isValidMove(card cardPlayed) {
         card topCard = peekTopCard();
 
+//        if(game.getSpecial() == "No") {
         if (cardPlayed.getColor().equals(topCard.getColor())
                 || cardPlayed.getValue().equals(topCard.getValue()))
             return true;
@@ -193,10 +207,15 @@ public class gameController implements gameConstants {
         else if (cardPlayed.getType() == WILD)
             return true;
 
-        else if(topCard.getType() == WILD){
-            Color color = ((wildCard)topCard).getWildColor();
+        else if (topCard.getType() == WILD) {
+            Color color = ((wildCard) topCard).getWildColor();
             return color.equals(cardPlayed.getColor());
         }
+//        } if (game.getSpecial() == "Yes"){
+//            if(cardPlayed.getValue().equals(DRAW2)){
+//                game.resetSpecial();
+//            }
+//        }
 
         return false;
     }
@@ -207,10 +226,11 @@ public class gameController implements gameConstants {
      ******************************************************************************/
     private void performActionCard(card action) {
 
-        if (action.getValue().equals(DRAW2))
+        if (action.getValue().equals(DRAW2)) {
             game.drawPlus(2);
-
-        else if (action.getValue().equals(REVERSE))
+//            if(game.getSpecial() == "Yes")
+//                game.changeTurn();
+        } else if (action.getValue().equals(REVERSE))
             game.changeTurn();
 
         else if (action.getValue().equals(SKIP))
@@ -284,5 +304,18 @@ public class gameController implements gameConstants {
      ******************************************************************************/
     public void returnSaidUNO() {
         game.setSaidUNO();
+    }
+
+    /******************************************************************************
+     * Fix for mult player mode > 1 after special skip
+     ******************************************************************************/
+    public void sendSkip() {
+        if (canPlay)
+            game.changeTurn();
+        game.playAI(peekTopCard());
+    }
+
+    public JFrame getParentFrame() {
+        return p;
     }
 }

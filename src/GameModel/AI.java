@@ -4,11 +4,12 @@ import CardModel.wildCard;
 import GameView.card;
 import Interface.gameConstants;
 import Interface.unoConstants;
+import gameControl.gameController;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.stream.Collectors;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /******************************************************************************
  * The AI class serves as artificial intelligence player of the game. This
@@ -23,8 +24,8 @@ public class AI extends Player implements gameConstants {
     /******************************************************************************
      * Empty default class constructor for set up.
      ******************************************************************************/
-    public AI() {
-        setName("AI");
+    public AI(String name) {
+        setName(name);
         super.setCards();
     }
 
@@ -34,7 +35,7 @@ public class AI extends Player implements gameConstants {
      * @param topCard - card for play comparision.
      * @return - true if AI can make valid move - else false.
      ******************************************************************************/
-    public boolean play(card topCard) {
+    public boolean play(card topCard, gameController gc) {
         boolean done = false;
         final Color currentColor;
         final String value = topCard.getValue();
@@ -50,15 +51,14 @@ public class AI extends Player implements gameConstants {
                 c.getColor() == currentColor || c.getValue().equals(value)).collect(Collectors.toList());
 
         if (tempHand.stream().findFirst().isPresent()) {
-
             try {
                 List<card> filterHand = tempHand.stream().filter(c -> c.getType() == card.ACTION).collect(Collectors.toList());
 
                 if (filterHand.stream().findFirst().isPresent()) {
-                    computerPressCard(filterHand.get(0));
+                    gc.playCard(filterHand.get(0));
 
                 } else {
-                    computerPressCard(tempHand.get(0));
+                    gc.playCard(tempHand.get(0));
                 }
 
                 done = true;
@@ -73,7 +73,8 @@ public class AI extends Player implements gameConstants {
 
             tempHand = getPlayerHand().stream().filter(c -> c.getType() == unoConstants.WILD).collect(Collectors.toList());
             if (tempHand.stream().findFirst().isPresent()) {
-                computerPressCard(tempHand.get(0));
+                gc.playCard(tempHand.get(0));
+
                 done = true;
             }
         }
@@ -123,7 +124,7 @@ public class AI extends Player implements gameConstants {
         for (card currentCard : getPlayerHand()) {
             if (currentCard.getColor().equals(unoConstants.RED)) {
                 red++;
-                if(red > max) {
+                if (red > max) {
                     max = red;
                     colorToReturn = 0;
                 }
@@ -131,7 +132,7 @@ public class AI extends Player implements gameConstants {
 
             if (currentCard.getColor().equals(unoConstants.YELLOW)) {
                 yellow++;
-                if(yellow > max) {
+                if (yellow > max) {
                     max = yellow;
                     colorToReturn = 1;
                 }
@@ -139,7 +140,7 @@ public class AI extends Player implements gameConstants {
 
             if (currentCard.getColor().equals(unoConstants.GREEN)) {
                 green++;
-                if(green > max) {
+                if (green > max) {
                     max = green;
                     colorToReturn = 2;
                 }
@@ -147,7 +148,7 @@ public class AI extends Player implements gameConstants {
 
             if (currentCard.getColor().equals(unoConstants.BLUE)) {
                 blue++;
-                if(blue > max) {
+                if (blue > max) {
                     max = blue;
                     colorToReturn = 3;
                 }

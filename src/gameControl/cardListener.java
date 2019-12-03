@@ -16,10 +16,10 @@ import java.awt.event.MouseEvent;
  ******************************************************************************/
 public class cardListener extends MouseAdapter {
 
-    // Source of card clicked //
-    private card source;
     // Game controller instance //
     gameController gController;
+    // Source of card clicked //
+    private card source;
 
     /******************************************************************************
      * Method to set the controller of the game.

@@ -3,8 +3,10 @@ package GameModel;
 import CardModel.wildCard;
 import GameView.card;
 import Interface.gameConstants;
+import gameControl.gameController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 /******************************************************************************
@@ -24,34 +26,69 @@ public class unoGame implements gameConstants {
     // Game mode //
     private int gameMODE;
     // AI instance //
-    private AI AI;
+    private AI[] AI;
     // Card dealer instance //
     private cardDealer dealer;
     // game check //
-    private boolean gameOver;
+    private boolean gameOver = false;
+    // //
+    private gameController gc;
+    // Game Direction //
+    private Direction dir = Direction.RIGHT;
+    // Special draw helper //
+    private String setSpecial = "No";
+//    // Special draw turn helper //
+//    private int specialDone
 
     /******************************************************************************
      * Default class constructor creates instance of UNO game.
      * @param mode - game mode.
      ******************************************************************************/
-    public unoGame(int mode) {
+    public unoGame(int mode, int cardsDealt, String specialDraw, String pName, gameController gc) {
+        updatePanel.setgMODE(mode);
         gameMODE = mode;
+        this.gc = gc;
 
         // Create game players //
-        String name = (gameMODE == manualMode) ? JOptionPane.showInputDialog("Player 1") : "AI";
-        String name2 = JOptionPane.showInputDialog("Player 2");
-        // Add more player names here later //
+        String name;
+        if (pName.equals("")) {
+            name = "No name";
+        } else {
+            name = pName;
+        }
+        Player p1 = new Player(name);
+        Player p2 = null;
+        Player p3 = null;
+        Player p4 = null;
+        AI = new AI[3];
 
-        if (gameMODE == AIMode)
-            AI = new AI();
+        for (int i = 0; i < gameMODE; i++) {
 
-        Player p1 = (gameMODE == AIMode) ? AI : new Player(name);
-        Player p2 = new Player(name2);
-        p2.nextPlayerTurn();
-        players = new Player[]{p1, p2};
+            if (i == 0) {
+                AI[0] = new AI("AI-1");
+                p2 = AI[0];
+            } else if (i == 1) {
+                AI[1] = new AI("AI-2");
+                p3 = AI[1];
+            } else if (i == 2) {
+                AI[2] = new AI("AI-3");
+                p4 = AI[2];
+            } else
+                System.out.println("Something went wrong.");
+        }
+
+        p1.nextPlayerTurn(); // FIX PLAYER ROTATION
+        if (mode == 1)
+            players = new Player[]{p1, p2};
+        else if (mode == 2)
+            players = new Player[]{p1, p2, p3};
+        else if (mode == 3)
+            players = new Player[]{p1, p2, p3, p4};
 
         // Create game dealer //
         dealer = new cardDealer();
+        getDealer().setFirstDeal(cardsDealt);
+        setSpecial = specialDraw; // IMPLEMENT
         cardStack = dealer.shuffle();
         dealer.dealCards(players);
         gameOver = false;
@@ -146,8 +183,10 @@ public class unoGame implements gameConstants {
             if (p.isPlayerTurn()) {
                 updatePanel.updateText(p.getName() + "'s Turn");
                 System.out.println(p.getName() + "'s Turn. Hand Count: " + p.getPlayerHandTotal());
+
             }
         }
+
         updatePanel.setDetail(cardsPlayedSize(), cardsRemaining());
         updatePanel.repaint();
     }
@@ -156,9 +195,80 @@ public class unoGame implements gameConstants {
      * This methods switches the players turns and alerts the game.
      ******************************************************************************/
     public void changeTurn() {
-        for (Player p : players) {
-            p.nextPlayerTurn();
+
+
+//        // Right Direction
+        if (dir == Direction.RIGHT) {
+            for (Player p : players) {
+////                // Mode = 1 //
+//                if (gameMODE == 1)
+//                    p.nextPlayerTurn();
+
+                // Mode = 2 //
+                if (gameMODE == 1) {
+                    if (p.isPlayerTurn() && p == players[0]) {
+                        players[0].nextPlayerTurn();
+                        players[1].nextPlayerTurn();
+                        break;
+                    } else if (p.isPlayerTurn() && p == players[1]) {
+                        players[1].nextPlayerTurn();
+                        players[0].nextPlayerTurn();
+                        break;
+                    }
+//                     else if (p.isPlayerTurn() && p == players[2]) {
+//                        players[2].nextPlayerTurn();
+//                        players[0].nextPlayerTurn();
+//                        break;
+//                    }
+                }
+//                // Mode = 3 //
+//                else if (gameMODE == 3) {
+//                    if (p.isPlayerTurn && p == players[0]) {
+//                        players[0].setPlayerTurn(false);
+//                        players[1].setPlayerTurn(true);
+//                    } else if (p.isPlayerTurn && p == players[1]) {
+//                        players[1].setPlayerTurn(false);
+//                        players[2].setPlayerTurn(true);
+//                    } else if (p.isPlayerTurn && p == players[2]) {
+//                        players[2].setPlayerTurn(false);
+//                        players[3].setPlayerTurn(true);
+//                    } else if (p.isPlayerTurn && p == players[3]) {
+//                        players[0].setPlayerTurn(true);
+//                        players[3].setPlayerTurn(false);
+//
+//                    }
+//                }
+            }
         }
+
+//        // Left Direction //
+//        else if (dir == Direction.LEFT) {
+//            for (Player p : players) {
+//
+//                // Mode = 1 //
+//                if (gameMODE == 1)
+//                    p.nextPlayerTurn();
+//                    // Mode = 2 //
+//                else if (gameMODE == 2) {
+//                    p.nextPlayerTurn();
+//                }  else if (gameMODE == 3) {
+//                        if (p.isPlayerTurn && p == players[0]) {
+//                            players[0].setPlayerTurn(false);
+//                            players[3].setPlayerTurn(true);
+//                        } else if (p.isPlayerTurn && p == players[1]) {
+//                            players[1].setPlayerTurn(false);
+//                            players[0].setPlayerTurn(true);
+//                        } else if (p.isPlayerTurn && p == players[2]) {
+//                            players[2].setPlayerTurn(false);
+//                            players[1].setPlayerTurn(true);
+//                        } else if (p.isPlayerTurn && p == players[3]) {
+//                            players[2].setPlayerTurn(true);
+//                            players[3].setPlayerTurn(false);
+//
+//                        }
+//                    }
+//                }
+//            }
         whoseTurn();
     }
 
@@ -167,7 +277,12 @@ public class unoGame implements gameConstants {
      * @return - true if AI can make a move - else false.
      ******************************************************************************/
     public boolean isAITurn() {
-        return AI.isPlayerTurn();
+
+        for (int i = 0; i < gameMODE; i++) {
+            if (AI[i].isPlayerTurn())
+                return true;
+        }
+        return false;
     }
 
     /******************************************************************************
@@ -175,21 +290,26 @@ public class unoGame implements gameConstants {
      * @param topCard - card for play comparison.
      ******************************************************************************/
     public void playAI(card topCard) {
-        if (AI.isPlayerTurn()) {
-            boolean done = AI.play(topCard);
+        for (int i = 0; i < gameMODE; i++) {
+            if (AI[i].isPlayerTurn()) {
+                boolean done = AI[i].play(topCard, gc);
 
-            if (!done) {
-                drawCard(topCard);
+                if (!done) {
+                    drawCard(topCard);
+                }
             }
         }
     }
 
     public int playAIWild() {
-        if(AI.isPlayerTurn()) {
-            return AI.pickWildColor();
-        } else
-            return -1;
+        for (int i = 0; i < gameMODE; i++) {
+            if (AI[i].isPlayerTurn()) {
+                return AI[i].pickWildColor();
+            }
+        }
+        return -1;
     }
+
 
     /******************************************************************************
      * This method returns the cards remaining in the shuffled deck.
@@ -204,7 +324,7 @@ public class unoGame implements gameConstants {
      * @return - cards played size.
      ******************************************************************************/
     public int[] cardsPlayedSize() {
-        int[] n = new int[2];
+        int[] n = new int[4];
         int i = 0;
         for (Player p : players) {
             n[i] = p.cardsPlayedTotal();
@@ -220,13 +340,17 @@ public class unoGame implements gameConstants {
      ******************************************************************************/
     public boolean gameOver() {
         if (cardStack.isEmpty()) {
-            gameOver = true;
-            return gameOver;
+            return true;
         }
 
         for (Player p : players) {
             if (!p.hasCards()) {
                 gameOver = true;
+                JOptionPane pane = new JOptionPane(p.getName() + " WINS!");
+                pane.setBackground(Color.WHITE);
+                pane.setFont(new Font("Dialog", Font.BOLD, 30));
+                JDialog jd = pane.createDialog(gc.getParentFrame(), "GAME OVER");
+                jd.setVisible(true);
                 break;
             }
         }
@@ -248,11 +372,10 @@ public class unoGame implements gameConstants {
         else if (topCard.getType() == WILD)
             return ((wildCard) topCard).getWildColor().equals(cardPlayed.getColor());
 
-        else if (cardPlayed.getType() == WILD)
-            return true;
+        else return cardPlayed.getType() == WILD;
 
-        return false;
     }
+
 
     /******************************************************************************
      * This method checks if a player has said UNO.
@@ -281,6 +404,37 @@ public class unoGame implements gameConstants {
                 }
             }
         }
+    }
+
+    /******************************************************************************
+     * This method returns the instance of this UNO games dealer.
+     * @return - card dealer.
+     ******************************************************************************/
+    public cardDealer getDealer() {
+        return dealer;
+    }
+
+
+    /******************************************************************************
+     * For game reverse.
+     ******************************************************************************/
+    public void setDirection(Direction direction) {
+        dir = direction;
+    }
+
+    public String getSpecial() {
+        return setSpecial;
+    }
+
+//    public void getSpecialTurnDone(){
+//        return
+//    }
+//    public void setSpecialTurnDone() {
+//        setSpecial = "No";
+//    }
+
+    public int getGameMode() {
+        return gameMODE;
     }
 
 }
