@@ -8,12 +8,12 @@
  - Add thorough testing
  - Add new javadocs?
 
-- Only mode 1 is working until game direction fixed. - Fix reverse with game direction
 - Draw two Settings ___
 - Slow down whosTurn() to display whos turn not only in terminal but also in game
-- Unless atleast 7 cards, cards start off-centered until first card/button press.
+- find way to start refreshpanel on run so cards < 7 can allign.
 
- - At end before submission go over running and fix/add all comments of each class
+- Add special draw two settings into rules dialog if implemented
+- At end before submission go over running and fix/add all comments of each class
 
  PRATTY NOTES:
  MYREN NOTES:

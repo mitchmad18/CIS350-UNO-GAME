@@ -41,7 +41,6 @@ public class gameFrame extends JFrame implements gameConstants, ActionListener {
         gameController = new gameController(this);
         CARDLISTEN.setController(gameController);
         BUTTONLISTEN.setController(gameController);
-
         gamePanel = gameController.getSession();
         setMenu();
         setJMenuBar(mb);
@@ -83,5 +82,9 @@ public class gameFrame extends JFrame implements gameConstants, ActionListener {
             rules = new rulesDialog(this);
             rules.run();
         }
+    }
+
+    public void startRefresh(){
+        gamePanel.refreshPanel();
     }
 }

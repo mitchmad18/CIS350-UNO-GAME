@@ -65,6 +65,7 @@ public class gameController implements gameConstants {
         // Get player who's turn it is //
         game.whoseTurn();
         canPlay = true;
+        session.refreshPanel();
     }
 
     /******************************************************************************
@@ -125,6 +126,7 @@ public class gameController implements gameConstants {
                 session.refreshPanel();
                 getResults();
 
+
             } else {
                 updatePanel.setError("Sorry, invalid move");
                 updatePanel.repaint();
@@ -133,17 +135,16 @@ public class gameController implements gameConstants {
 
         // Play for AI //
         if (canPlay()) {
-            System.out.println("Here1");
             if (game.isAITurn()) {
-                System.out.println("Here2");
                 game.playAI(peekTopCard());
                 session.refreshPanel();
-                System.out.println("Here3");
             }
         }
     }
 
-    /******************************************************************************     * Method to set color of WILD card if first on discard pile.
+
+    /******************************************************************************
+     * * Method to set color of WILD card if first on discard pile.
      * ** TO BE CORRECTED TO REPLACE WITH card not of TYPE:WILD**
      * @param firstCard - first card on discard pile.
      ******************************************************************************/
@@ -231,20 +232,20 @@ public class gameController implements gameConstants {
 //            if(game.getSpecial() == "Yes")
 //                game.changeTurn();
         } else if (action.getValue().equals(REVERSE))
-            game.changeTurn();
+            game.changeDirection();
 
         else if (action.getValue().equals(SKIP))
             game.changeTurn();
 
         else if (action.getValue().equals(WCOLORPICK)) {
-            if (gameMode == 1 && game.isAITurn()) {
+            if (game.isAITurn()) {
                 ((wildCard) action).setWildColor(cardCOLORS[game.playAIWild()]);
             } else {
                 ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
             }
 
         } else if (action.getValue().equals(WDRAW4)) {
-            if (gameMode == 1 && game.isAITurn()) {
+            if (game.isAITurn()) {
                 ((wildCard) action).setWildColor(cardCOLORS[game.playAIWild()]);
             } else {
                 ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
@@ -279,7 +280,6 @@ public class gameController implements gameConstants {
                 game.playAI(peekTopCard());
             }
         }
-
         session.refreshPanel();
     }
 
@@ -312,7 +312,10 @@ public class gameController implements gameConstants {
     public void sendSkip() {
         if (canPlay)
             game.changeTurn();
-        game.playAI(peekTopCard());
+
+        if (game.isAITurn()) {
+            game.playAI(peekTopCard());
+        }
     }
 
     public JFrame getParentFrame() {

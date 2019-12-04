@@ -132,10 +132,8 @@ public class gameSession extends JPanel {
      * This method is used to refresh panels with updates.
      ******************************************************************************/
     public void refreshPanel() {
-        if (game.getGameMode() == 1) {
-            p1.setUpCards();
+        p1.setUpCards();
             // a2.setUpCards();
-        }
         table.revalidate();
         revalidate();
     }

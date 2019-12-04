@@ -8,6 +8,7 @@ import gameControl.gameController;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /******************************************************************************
  * The unoGame class serves as an instance of the game. Sets up game, players
@@ -167,10 +168,12 @@ public class unoGame implements gameConstants {
      * @param numCards - number of cards to be drawn.
      ******************************************************************************/
     public void drawPlus(int numCards) {
+        Player next;
         for (Player p : players) {
-            if (!p.isPlayerTurn()) {
+            if (p.isPlayerTurn()) {
+                next = getNextPlayer();
                 for (int i = 0; i < numCards; i++)
-                    p.drawCard(getCard());
+                    next.drawCard(getCard());
             }
         }
     }
@@ -179,6 +182,8 @@ public class unoGame implements gameConstants {
      * This method lets the game know which player is in turn.
      ******************************************************************************/
     public void whoseTurn() {
+
+
         for (Player p : players) {
             if (p.isPlayerTurn()) {
                 updatePanel.updateText(p.getName() + "'s Turn");
@@ -195,81 +200,17 @@ public class unoGame implements gameConstants {
      * This methods switches the players turns and alerts the game.
      ******************************************************************************/
     public void changeTurn() {
+        Player next;
 
-
-//        // Right Direction
-        if (dir == Direction.RIGHT) {
-            for (Player p : players) {
-////                // Mode = 1 //
-//                if (gameMODE == 1)
-//                    p.nextPlayerTurn();
-
-                // Mode = 2 //
-                if (gameMODE == 1) {
-                    if (p.isPlayerTurn() && p == players[0]) {
-                        players[0].nextPlayerTurn();
-                        players[1].nextPlayerTurn();
-                        break;
-                    } else if (p.isPlayerTurn() && p == players[1]) {
-                        players[1].nextPlayerTurn();
-                        players[0].nextPlayerTurn();
-                        break;
-                    }
-//                     else if (p.isPlayerTurn() && p == players[2]) {
-//                        players[2].nextPlayerTurn();
-//                        players[0].nextPlayerTurn();
-//                        break;
-//                    }
-                }
-//                // Mode = 3 //
-//                else if (gameMODE == 3) {
-//                    if (p.isPlayerTurn && p == players[0]) {
-//                        players[0].setPlayerTurn(false);
-//                        players[1].setPlayerTurn(true);
-//                    } else if (p.isPlayerTurn && p == players[1]) {
-//                        players[1].setPlayerTurn(false);
-//                        players[2].setPlayerTurn(true);
-//                    } else if (p.isPlayerTurn && p == players[2]) {
-//                        players[2].setPlayerTurn(false);
-//                        players[3].setPlayerTurn(true);
-//                    } else if (p.isPlayerTurn && p == players[3]) {
-//                        players[0].setPlayerTurn(true);
-//                        players[3].setPlayerTurn(false);
-//
-//                    }
-//                }
+        for(Player p: players){
+            if(p.isPlayerTurn()){
+                next = getNextPlayer();
+                p.nextPlayerTurn();
+                next.nextPlayerTurn();
+                whoseTurn();
+                break;
             }
         }
-
-//        // Left Direction //
-//        else if (dir == Direction.LEFT) {
-//            for (Player p : players) {
-//
-//                // Mode = 1 //
-//                if (gameMODE == 1)
-//                    p.nextPlayerTurn();
-//                    // Mode = 2 //
-//                else if (gameMODE == 2) {
-//                    p.nextPlayerTurn();
-//                }  else if (gameMODE == 3) {
-//                        if (p.isPlayerTurn && p == players[0]) {
-//                            players[0].setPlayerTurn(false);
-//                            players[3].setPlayerTurn(true);
-//                        } else if (p.isPlayerTurn && p == players[1]) {
-//                            players[1].setPlayerTurn(false);
-//                            players[0].setPlayerTurn(true);
-//                        } else if (p.isPlayerTurn && p == players[2]) {
-//                            players[2].setPlayerTurn(false);
-//                            players[1].setPlayerTurn(true);
-//                        } else if (p.isPlayerTurn && p == players[3]) {
-//                            players[2].setPlayerTurn(true);
-//                            players[3].setPlayerTurn(false);
-//
-//                        }
-//                    }
-//                }
-//            }
-        whoseTurn();
     }
 
     /******************************************************************************
@@ -309,7 +250,6 @@ public class unoGame implements gameConstants {
         }
         return -1;
     }
-
 
     /******************************************************************************
      * This method returns the cards remaining in the shuffled deck.
@@ -418,8 +358,13 @@ public class unoGame implements gameConstants {
     /******************************************************************************
      * For game reverse.
      ******************************************************************************/
-    public void setDirection(Direction direction) {
-        dir = direction;
+    public void changeDirection() {
+        if (dir == Direction.RIGHT) {
+            dir = Direction.LEFT;
+
+        } else if (dir == Direction.LEFT) {
+            dir = Direction.RIGHT;
+        }
     }
 
     public String getSpecial() {
@@ -437,4 +382,83 @@ public class unoGame implements gameConstants {
         return gameMODE;
     }
 
+    public Player getNextPlayer() {
+
+        // Right Direction
+        if (dir == Direction.RIGHT) {
+            for (Player p : players) {
+
+                // Mode = 1 //
+                if (gameMODE == 1)
+                    if (p.isPlayerTurn() && p == players[0]) {
+                        return players[1];
+                    } else if (p.isPlayerTurn() && p == players[1]) {
+                        return players[0];
+                    }
+
+                // Mode = 2 //
+                if (gameMODE == 2) {
+                    if (p.isPlayerTurn() && p == players[0]) {
+                        return players[1];
+                    } else if (p.isPlayerTurn() && p == players[1]) {
+                        return players[2];
+                    } else if (p.isPlayerTurn() && p == players[2]) {
+                        return players[0];
+                    }
+                }
+
+                // Mode = 3 //
+                if (gameMODE == 3) {
+                    if (p.isPlayerTurn() && p == players[0]) {
+                        return players[1];
+                    } else if (p.isPlayerTurn() && p == players[1]) {
+                        return players[2];
+                    } else if (p.isPlayerTurn() && p == players[2]) {
+                        return players[3];
+                    } else if (p.isPlayerTurn() && p == players[3]) {
+                        return players[0];
+                    }
+                }
+            }
+        }
+
+//        // Left Direction
+        if (dir == Direction.LEFT) {
+            for (Player p : players) {
+
+                // Mode = 1 //
+                if (gameMODE == 1)
+                    if (p.isPlayerTurn() && p == players[0]) {
+                        return players[1];
+                    } else if (p.isPlayerTurn() && p == players[1]) {
+                        return players[0];
+                    }
+
+                // Mode = 2 //
+                if (gameMODE == 2) {
+                    if (p.isPlayerTurn() && p == players[0]) {
+                        return players[2];
+                    } else if (p.isPlayerTurn() && p == players[2]) {
+                        return players[1];
+                    } else if (p.isPlayerTurn() && p == players[1]) {
+                        return players[0];
+                    }
+                }
+
+                // Mode = 3 //
+                if (gameMODE == 3) {
+                    if (p.isPlayerTurn() && p == players[0]) {
+                        return players[3];
+                    } else if (p.isPlayerTurn() && p == players[3]) {
+                        return players[2];
+                    } else if (p.isPlayerTurn() && p == players[2]) {
+                        return players[1];
+                    } else if (p.isPlayerTurn() && p == players[1]) {
+                        return players[0];
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }
