@@ -211,6 +211,11 @@ public class unoGame implements gameConstants {
                 break;
             }
         }
+
+        if (isAITurn()) {
+            playAI(gc.peekTopCard());
+            gc.getSession().refreshPanel();
+        }
     }
 
     /******************************************************************************
@@ -280,17 +285,14 @@ public class unoGame implements gameConstants {
      ******************************************************************************/
     public boolean gameOver() {
         if (cardStack.isEmpty()) {
-            return true;
+            gameOver = true;
         }
 
         for (Player p : players) {
             if (!p.hasCards()) {
                 gameOver = true;
-                JOptionPane pane = new JOptionPane(p.getName() + " WINS!");
-                pane.setBackground(Color.WHITE);
-                pane.setFont(new Font("Dialog", Font.BOLD, 30));
-                JDialog jd = pane.createDialog(gc.getParentFrame(), "GAME OVER");
-                jd.setVisible(true);
+                JOptionPane.showMessageDialog(null,p.getName() + " WINS!",
+                        "GAME OVER", JOptionPane.OK_OPTION);
                 break;
             }
         }
@@ -459,6 +461,6 @@ public class unoGame implements gameConstants {
                 }
             }
         }
-        return null;
+        return players[0];
     }
 }

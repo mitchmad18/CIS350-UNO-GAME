@@ -11,6 +11,7 @@
 - Draw two Settings ___
 - Slow down whosTurn() to display whos turn not only in terminal but also in game
 - find way to start refreshpanel on run so cards < 7 can allign.
+- minor bug in A.I Rotation
 
 - Add special draw two settings into rules dialog if implemented
 - At end before submission go over running and fix/add all comments of each class

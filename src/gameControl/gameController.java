@@ -39,14 +39,12 @@ public class gameController implements gameConstants {
     private welcomeDialog welcome;
     // Welcome dialog data //
     private String[] data = new String[4];
-    private JFrame p;
 
     /******************************************************************************
      * Empty default class constructor
      ******************************************************************************/
     public gameController(JFrame parent) {
         welcomeSetUp(parent);
-        p = parent;
         cardsPlayed = new ArrayList<card>();
 
         // First card on discard pile //
@@ -120,11 +118,20 @@ public class gameController implements gameConstants {
                     performActionCard(cardClicked);
                 }
 
-                // Switch player turn //
-                game.changeTurn();
-                session.updatePanel(cardClicked);
-                session.refreshPanel();
-                getResults();
+                // Special Draw 2 //
+                if(cardClicked.getValue() == DRAW2 && cardsPlayed.get(cardsPlayed.size()-2).getValue()
+                        != DRAW2 && game.getSpecial() == "Yes"){
+                    session.updatePanel(cardClicked);
+                    session.refreshPanel();
+                    getResults();
+
+                }else {
+                    // Switch player turn //
+                    session.updatePanel(cardClicked);
+                    game.changeTurn();
+                    session.refreshPanel();
+                    getResults();
+                }
 
 
             } else {
@@ -171,7 +178,7 @@ public class gameController implements gameConstants {
     /******************************************************************************
      * Method to display results of game END for player notification & stop game.
      ******************************************************************************/
-    private void getResults() {
+    public void getResults() {
         if (game.gameOver()) {
             canPlay = false;
             updatePanel.updateText("GAME OVER");
@@ -263,7 +270,7 @@ public class gameController implements gameConstants {
 
         String colorPicked = (String) JOptionPane.showInputDialog(null,
                 "Choose card color", "WILD CARD: ",
-                JOptionPane.DEFAULT_OPTION, null, colors.toArray(), null);
+                JOptionPane.DEFAULT_OPTION, null, colors.toArray(), RED);
 
         return colors.indexOf(colorPicked);
     }
@@ -318,7 +325,4 @@ public class gameController implements gameConstants {
         }
     }
 
-    public JFrame getParentFrame() {
-        return p;
-    }
 }
