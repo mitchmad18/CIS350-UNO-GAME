@@ -10,7 +10,7 @@ import java.awt.*;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public class actionCard extends card {
 

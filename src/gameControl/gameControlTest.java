@@ -11,7 +11,7 @@ public class gameControlTest {
 
     @BeforeClass
     public static void setUp() {
-        GameController = new gameController();
+//        GameController = new gameController();
         ButtonListener = new buttonListener();
         CardListener = new cardListener();
 
@@ -24,7 +24,7 @@ public class gameControlTest {
         ButtonListener.drawCard();
         Assert.assertTrue(GameController.canPlay());
         Assert.assertNotNull(GameController.peekTopCard());
-        
+
     }
 
     @Test

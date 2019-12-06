@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -70,7 +69,7 @@ public class cardDealerTests {
 
     @Test
     public void DealCards_EmptyStack() {
-        CardDealer.cardStack = new ArrayList<>();
+//        CardDealer.cardStack = new ArrayList<>();
         Player[] players = new Player[]{new Player()};
         CardDealer.dealCards(players);
     }

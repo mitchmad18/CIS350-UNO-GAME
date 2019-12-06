@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public class buttonListener implements ActionListener {
 
@@ -38,6 +38,14 @@ public class buttonListener implements ActionListener {
     public void sayUNO() {
         if (gController.canPlay())
             gController.returnSaidUNO();
+    }
+
+    /******************************************************************************
+     * Implement for mult - only works mode 1
+     ******************************************************************************/
+    public void skip() {
+        if (gController.canPlay())
+            gController.sendSkip();
     }
 
     @Override

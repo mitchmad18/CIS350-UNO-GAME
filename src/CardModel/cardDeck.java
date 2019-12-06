@@ -14,27 +14,27 @@ import java.util.List;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public class cardDeck implements gameConstants {
 
-    // Represents the base starting deck of Uno //
-    public List<card> baseDeck;
     // Represents the number cards added to the base deck of Uno //
-//    private final List<numCard> numberCards;
-//    // Represents the action cards added to the base deck of Uno //
-//    public List<actionCard> actionCards;
-//    // Represents the wild cards added to the base deck of Uno //
-//    private final List<wildCard> wildCards;
+    private final List<numCard> numberCards;
+    // Represents the action cards added to the base deck of Uno //
+    private final List<actionCard> actionCards;
+    // Represents the wild cards added to the base deck of Uno //
+    private final List<wildCard> wildCards;
+    // Represents the base starting deck of Uno //
+    private List<card> baseDeck;
 
     /******************************************************************************
      * Empty default class constructor creating card deck on call.
      ******************************************************************************/
     public cardDeck() {
         baseDeck = new ArrayList<card>();
-//        numberCards = new ArrayList<numCard>();
-//        actionCards = new ArrayList<actionCard>();
-//        wildCards = new ArrayList<wildCard>();
+        numberCards = new ArrayList<numCard>();
+        actionCards = new ArrayList<actionCard>();
+        wildCards = new ArrayList<wildCard>();
 
         startDeck(); // Deck creation
         addCardListener(CARDLISTEN);

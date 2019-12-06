@@ -12,7 +12,7 @@ import java.awt.*;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public class tablePanel extends JPanel implements gameConstants {
 
@@ -23,7 +23,7 @@ public class tablePanel extends JPanel implements gameConstants {
 
     /******************************************************************************
      * Default class constructor.
-     * @param - first game card.
+     * @param firstCard first game card.
      ******************************************************************************/
     public tablePanel(card firstCard) {
         setOpaque(false);

@@ -7,24 +7,24 @@ import java.awt.*;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public interface unoConstants {
 
     // Color of cards //
-    public static Color RED = new Color(204, 0, 0);
-    public static Color GREEN = new Color(0, 125, 0);
-    public static Color YELLOW = new Color(255, 200, 0);
-    public static Color BLUE = new Color(0, 0, 204);
-    public static Color BLACK = new Color(0, 0, 0);
+    Color RED = new Color(204, 0, 0);
+    Color GREEN = new Color(0, 125, 0);
+    Color YELLOW = new Color(255, 200, 0);
+    Color BLUE = new Color(0, 0, 204);
+    Color BLACK = new Color(0, 0, 0);
 
     // Types of cards //
-    public static int NUMBERS = 1;
-    public static int ACTION = 2;
-    public static int WILD = 3;
+    int NUMBERS = 1;
+    int ACTION = 2;
+    int WILD = 3;
 
     // Action card characters //
-    Character charRev = (char) 8364; //**TO BE CORRECTED**
+    Character charRev = (char) 8634;
     Character charSkip = (char) Integer.parseInt("2718", 16);
 
     // Action card functions //

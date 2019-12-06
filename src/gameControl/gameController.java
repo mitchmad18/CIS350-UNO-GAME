@@ -5,6 +5,7 @@ import GameModel.Player;
 import GameModel.unoGame;
 import GameView.card;
 import GameView.gameSession;
+import GameView.welcomeDialog;
 import Interface.gameConstants;
 import Interface.unoConstants;
 
@@ -12,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /******************************************************************************
  * The gameController class serves as the main control of the game. This class
@@ -19,7 +21,7 @@ import java.util.List;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public class gameController implements gameConstants {
 
@@ -33,31 +35,36 @@ public class gameController implements gameConstants {
     private List<card> cardsPlayed;
     // Represents mode of game //
     private int gameMode;
+    // Welcome dialog //
+    private welcomeDialog welcome;
+    // Welcome dialog data //
+    private String[] data = new String[4];
 
     /******************************************************************************
      * Empty default class constructor
+     * @param parent the parent frame
      ******************************************************************************/
-    public gameController() {
-        gameMode = requestMode();
-        game = new unoGame(gameMode);
+    public gameController(JFrame parent) {
+        welcomeSetUp(parent);
         cardsPlayed = new ArrayList<card>();
 
         // First card on discard pile //
         card firstCard = game.getCard();
-        if(firstCard.getType() == unoConstants.WILD) {
-            while(firstCard.getType() == unoConstants.WILD) {
+        if (firstCard.getType() == unoConstants.WILD) {
+            while (firstCard.getType() == unoConstants.WILD) {
                 game.recreateDealer();
                 firstCard = game.getCard();
             }
         }
 
-        //changeFirstCard(firstCard);
+        changeFirstCard(firstCard);
         cardsPlayed.add(firstCard);
         session = new gameSession(game, firstCard);
 
         // Get player who's turn it is //
         game.whoseTurn();
         canPlay = true;
+        session.refreshPanel();
     }
 
     /******************************************************************************
@@ -65,18 +72,25 @@ public class gameController implements gameConstants {
      * option. *TO BE CORRECTED for multi-AI ONLY**
      * @return - mode of game.
      ******************************************************************************/
-    private int requestMode() {
-        Object[] options = {"vs A.I.", "Manual", "Cancel"};
-        int n = JOptionPane.showOptionDialog(null,
-                "Choose a Game Mode to play", "Game Mode",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options, options[0]);
+    private void welcomeSetUp(JFrame parent) {
+        welcome = new welcomeDialog(parent);
+        data = welcome.run();
 
-        if (n == 2)
-            System.exit(1);
+        // Game mode // Fix game mode entry set up only 1(AI) & 2(MANUAL) work but
+        // wrong for now //
+        try {
+            // Game Mode - num of A.I players //
+            gameMode = Integer.parseInt(data[0]);
 
-        return gameModes[n];
+            // Instantiate new game after mode entered //
+            game = new unoGame(gameMode, Integer.parseInt(data[1]), data[2], data[3], this);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Error 1");
+        }
+
     }
+
 
     /******************************************************************************
      * Method to control the play of cards within the game.
@@ -105,11 +119,21 @@ public class gameController implements gameConstants {
                     performActionCard(cardClicked);
                 }
 
-                // Switch player turn //
-                game.changeTurn();
-                session.updatePanel(cardClicked);
-                session.refreshPanel();
-                getResults();
+                // Special Draw 2 //
+                if (cardClicked.getValue() == DRAW2 && cardsPlayed.get(cardsPlayed.size() - 2).getValue()
+                        != DRAW2 && game.getSpecial() == "Yes") {
+                    session.updatePanel(cardClicked);
+                    session.refreshPanel();
+                    getResults();
+
+                } else {
+                    // Switch player turn //
+                    session.updatePanel(cardClicked);
+                    game.changeTurn();
+                    session.refreshPanel();
+                    getResults();
+                }
+
 
             } else {
                 updatePanel.setError("Sorry, invalid move");
@@ -118,7 +142,7 @@ public class gameController implements gameConstants {
         }
 
         // Play for AI //
-        if (gameMode == AIMode && canPlay()) {
+        if (canPlay()) {
             if (game.isAITurn()) {
                 game.playAI(peekTopCard());
                 session.refreshPanel();
@@ -126,22 +150,23 @@ public class gameController implements gameConstants {
         }
     }
 
+
     /******************************************************************************
-     * Method to set color of WILD card if first on discard pile.
+     * * Method to set color of WILD card if first on discard pile.
      * ** TO BE CORRECTED TO REPLACE WITH card not of TYPE:WILD**
      * @param firstCard - first card on discard pile.
      ******************************************************************************/
-//    private void changeFirstCard(card firstCard) {
-//        firstCard.removeMouseListener(CARDLISTEN);
-//        if (firstCard.getType() == WILD) {
-//            int random = new Random().nextInt() % 4;
-//            try {
-//                ((wildCard) firstCard).setWildColor(cardCOLORS[Math.abs(random)]);
-//            } catch (Exception e) {
-//                System.out.print("Something went wrong changing first card");
-//            }
-//        }
-//    }
+    private void changeFirstCard(card firstCard) {
+        firstCard.removeMouseListener(CARDLISTEN);
+        if (firstCard.getType() == WILD) {
+            int random = new Random().nextInt() % 4;
+            try {
+                ((wildCard) firstCard).setWildColor(cardCOLORS[Math.abs(random)]);
+            } catch (Exception e) {
+                System.out.print("Something went wrong changing first card");
+            }
+        }
+    }
 
     /******************************************************************************
      * Method to get the current game session.
@@ -152,9 +177,9 @@ public class gameController implements gameConstants {
     }
 
     /******************************************************************************
-     * Method to display results of game END for player notification & stop game.
+     * Method to display results of game END for player notification and stop game.
      ******************************************************************************/
-    private void getResults() {
+    public void getResults() {
         if (game.gameOver()) {
             canPlay = false;
             updatePanel.updateText("GAME OVER");
@@ -183,6 +208,7 @@ public class gameController implements gameConstants {
     public boolean isValidMove(card cardPlayed) {
         card topCard = peekTopCard();
 
+//        if(game.getSpecial() == "No") {
         if (cardPlayed.getColor().equals(topCard.getColor())
                 || cardPlayed.getValue().equals(topCard.getValue()))
             return true;
@@ -190,10 +216,15 @@ public class gameController implements gameConstants {
         else if (cardPlayed.getType() == WILD)
             return true;
 
-        else if(topCard.getType() == WILD){
-            Color color = ((wildCard)topCard).getWildColor();
+        else if (topCard.getType() == WILD) {
+            Color color = ((wildCard) topCard).getWildColor();
             return color.equals(cardPlayed.getColor());
         }
+//        } if (game.getSpecial() == "Yes"){
+//            if(cardPlayed.getValue().equals(DRAW2)){
+//                game.resetSpecial();
+//            }
+//        }
 
         return false;
     }
@@ -204,24 +235,25 @@ public class gameController implements gameConstants {
      ******************************************************************************/
     private void performActionCard(card action) {
 
-        if (action.getValue().equals(DRAW2))
+        if (action.getValue().equals(DRAW2)) {
             game.drawPlus(2);
-
-        else if (action.getValue().equals(REVERSE))
-            game.changeTurn();
+//            if(game.getSpecial() == "Yes")
+//                game.changeTurn();
+        } else if (action.getValue().equals(REVERSE))
+            game.changeDirection();
 
         else if (action.getValue().equals(SKIP))
             game.changeTurn();
 
         else if (action.getValue().equals(WCOLORPICK)) {
-            if (gameMode == 1 && game.isAITurn()) {
+            if (game.isAITurn()) {
                 ((wildCard) action).setWildColor(cardCOLORS[game.playAIWild()]);
             } else {
                 ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
             }
 
         } else if (action.getValue().equals(WDRAW4)) {
-            if (gameMode == 1 && game.isAITurn()) {
+            if (game.isAITurn()) {
                 ((wildCard) action).setWildColor(cardCOLORS[game.playAIWild()]);
             } else {
                 ((wildCard) action).setWildColor(cardCOLORS[pickColor()]);
@@ -239,7 +271,7 @@ public class gameController implements gameConstants {
 
         String colorPicked = (String) JOptionPane.showInputDialog(null,
                 "Choose card color", "WILD CARD: ",
-                JOptionPane.DEFAULT_OPTION, null, colors.toArray(), null);
+                JOptionPane.DEFAULT_OPTION, null, colors.toArray(), RED);
 
         return colors.indexOf(colorPicked);
     }
@@ -256,7 +288,6 @@ public class gameController implements gameConstants {
                 game.playAI(peekTopCard());
             }
         }
-
         session.refreshPanel();
     }
 
@@ -282,4 +313,17 @@ public class gameController implements gameConstants {
     public void returnSaidUNO() {
         game.setSaidUNO();
     }
+
+    /******************************************************************************
+     * Fix for mult player mode greater than 1 after special skip
+     ******************************************************************************/
+    public void sendSkip() {
+        if (canPlay)
+            game.changeTurn();
+
+        if (game.isAITurn()) {
+            game.playAI(peekTopCard());
+        }
+    }
+
 }

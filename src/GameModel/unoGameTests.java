@@ -7,9 +7,9 @@ import Interface.unoConstants;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class unoGameTests {
     private unoGame UnoGame;
@@ -17,14 +17,12 @@ public class unoGameTests {
 
     @Before
     public void setUp() {
-        UnoGame = new unoGame(1);
         players = UnoGame.getPlayers();
     }
 
     @Test
     public void Constructor1() {
 
-        Assert.assertNotNull(UnoGame.AI);
         Assert.assertNotNull(UnoGame.getPlayers());
         Assert.assertEquals(2, UnoGame.getPlayers().length);
         Assert.assertFalse(UnoGame.gameOver());
@@ -33,9 +31,7 @@ public class unoGameTests {
 
     @Test
     public void Constructor2() {
-        UnoGame = new unoGame(2);
 
-        Assert.assertNull(UnoGame.AI);
         Assert.assertNotNull(UnoGame.getPlayers());
         Assert.assertEquals(2, UnoGame.getPlayers().length);
         Assert.assertFalse(UnoGame.gameOver());
@@ -132,42 +128,6 @@ public class unoGameTests {
     @Test
     public void IsAITurn() {
         Assert.assertFalse(UnoGame.isAITurn());
-    }
-
-    @Test
-    public void PlayAI() {
-        UnoGame.AI.isPlayerTurn = true;
-        UnoGame.playAI(UnoGame.cardStack.get(UnoGame.cardStack.size() - 1));
-    }
-
-    @Test
-    public void PlayAI_NotDone() {
-        UnoGame.AI.isPlayerTurn = true;
-        List<card> tempHand = new ArrayList<>();
-        tempHand.add(new numCard(unoConstants.BLUE, "2"));
-        UnoGame.AI.playerHand = tempHand;
-        UnoGame.playAI(new numCard(unoConstants.RED, "3"));
-
-        Assert.assertEquals(2, UnoGame.AI.getPlayerHandTotal());
-    }
-
-    @Test
-    public void PlayAI_WildColor() {
-        UnoGame.AI.isPlayerTurn = true;
-        List<card> tempHand = new ArrayList<>();
-        tempHand.add(new numCard(unoConstants.RED, "2"));
-        tempHand.add(new numCard(unoConstants.RED, "3"));
-        UnoGame.AI.playerHand = tempHand;
-        int wildNumber = UnoGame.playAIWild();
-        Assert.assertEquals(0, wildNumber);
-    }
-
-    @Test
-    public void PlayAI_WildNone() {
-        UnoGame.AI.isPlayerTurn = true;
-        UnoGame.AI.playerHand.clear();
-        int wildNUmber = UnoGame.playAIWild();
-        Assert.assertEquals(-1, wildNUmber);
     }
 
     @Test

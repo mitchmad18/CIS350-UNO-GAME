@@ -14,14 +14,16 @@ import java.util.Random;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public class cardDealer implements gameConstants {
 
     // Card deck instance - start deck//
     public cardDeck deck;
     // Shuffled deck ready for play use //
-    List<card> cardStack;
+    private List<card> cardStack;
+    // Number of cards dealt //
+    private int numDealt = firstDeal;
 
     /******************************************************************************
      * Empty default class constructor.
@@ -67,7 +69,7 @@ public class cardDealer implements gameConstants {
                 this.shuffle();
             }
 
-            for (int i = 0; i < firstDeal; i++) {
+            for (int i = 0; i < numDealt; i++) {
                 for (Player p : players) {
                     p.drawCard(drawCard());
 
@@ -86,6 +88,14 @@ public class cardDealer implements gameConstants {
         card drawnCard = cardStack.get(cardStack.size() - 1);
         cardStack.remove(cardStack.size() - 1);
         return drawnCard;
+    }
+
+    /******************************************************************************
+     * Method to set the number of cards dealt at game start.
+     * @param numberToDeal - number of cards to deal.
+     ******************************************************************************/
+    public void setFirstDeal(int numberToDeal) {
+        numDealt = numberToDeal;
     }
 
 }

@@ -13,16 +13,18 @@ import java.awt.event.ActionListener;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public class gameFrame extends JFrame implements gameConstants, ActionListener {
 
-    // Menu bar //
-    private static JMenuBar mb;
     // Menus displayed in the menu bar //
     protected static JMenu mainMenu;
+    // Menu bar //
+    private static JMenuBar mb;
     // Options listed under the menu //
-    private static JMenuItem quitItem, newGameItem;
+    private static JMenuItem quitItem, newGameItem, rulesItem;
+    // //
+    private rulesDialog rules;
     // Uno game session instance //
     private gameSession gamePanel;
     // Uno game controller instance //
@@ -35,46 +37,54 @@ public class gameFrame extends JFrame implements gameConstants, ActionListener {
         newGame();
     }
 
-    public void newGame(){
-        gameController = new gameController();
+    public void newGame() {
+        gameController = new gameController(this);
         CARDLISTEN.setController(gameController);
         BUTTONLISTEN.setController(gameController);
-
         gamePanel = gameController.getSession();
         setMenu();
         setJMenuBar(mb);
         add(gamePanel);
     }
 
-    public void setMenu(){
+    public void setMenu() {
         mb = new JMenuBar();
         mainMenu = new JMenu("Menu");
 
         quitItem = new JMenuItem("Quit Game");
         newGameItem = new JMenuItem("New Game");
+        rulesItem = new JMenuItem("Game Rules");
 
         quitItem.addActionListener(this);
         newGameItem.addActionListener(this);
+        rulesItem.addActionListener(this);
 
         mainMenu.add(quitItem);
         mainMenu.add(newGameItem);
+        mainMenu.add(rulesItem);
         mb.add(mainMenu);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == quitItem){
+        if (e.getSource() == quitItem) {
             System.exit(0);
-        }
-        else if(e.getSource() == newGameItem){
+        } else if (e.getSource() == newGameItem) {
             System.out.println("New Game");
             this.dispose();
             JFrame frame = new gameFrame();
-            frame.setVisible(true);
             frame.setResizable(false);
-            frame.setLocation(200, 100);
+            frame.setLocation(0, 0);
             frame.pack();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setVisible(true);
+        } else if (e.getSource() == rulesItem) {
+            rules = new rulesDialog(this);
+            rules.run();
         }
+    }
+
+    public void startRefresh() {
+        gamePanel.refreshPanel();
     }
 }

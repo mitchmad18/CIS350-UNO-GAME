@@ -1,8 +1,9 @@
 package CardModel;
 
-import GameView.card;
 import Interface.unoConstants;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 
 public class cardDeckTest {
@@ -29,12 +30,12 @@ public class cardDeckTest {
         Assert.assertNotNull(cardDeck);
     }
 
-    @Test
-    public void cardListener() {
-        for (card card: cardDeck.baseDeck) {
-            Assert.assertNotNull(card.getContainerListeners());
-        }
-    }
+//    @Test
+//    public void cardListener() {
+//        for (card card: cardDeck.baseDeck) {
+//            Assert.assertNotNull(card.getContainerListeners());
+//        }
+//    }
 
     @Test
     public void actionCard() {

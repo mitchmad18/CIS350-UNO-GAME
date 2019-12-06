@@ -7,7 +7,7 @@ import java.awt.*;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public interface cardInterface {
 
@@ -25,22 +25,16 @@ public interface cardInterface {
     int OFFSET = 71;
 
     /******************************************************************************
-     * This method sets the color of the card created.
-     * @param newColor - card color.
-     ******************************************************************************/
-    void setColor(Color newColor);
-
-    /******************************************************************************
      * This method gets the color of the card created.
      * @return - card color.
      ******************************************************************************/
     Color getColor();
 
     /******************************************************************************
-     * This method sets the value of the card created.
-     * @param newValue - card value.
+     * This method sets the color of the card created.
+     * @param newColor - card color.
      ******************************************************************************/
-    void setValue(String newValue);
+    void setColor(Color newColor);
 
     /******************************************************************************
      * This method gets the value of the card created.
@@ -49,14 +43,20 @@ public interface cardInterface {
     String getValue();
 
     /******************************************************************************
-     * This method sets the type of the card created.
-     * @param newType - card type.
+     * This method sets the value of the card created.
+     * @param newValue - card value.
      ******************************************************************************/
-    void setType(int newType);
+    void setValue(String newValue);
 
     /******************************************************************************
      * This method gets the type of the card created.
      * @return - card type.
      ******************************************************************************/
     int getType();
+
+    /******************************************************************************
+     * This method sets the type of the card created.
+     * @param newType - card type.
+     ******************************************************************************/
+    void setType(int newType);
 }

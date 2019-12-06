@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public class playerPanel extends JPanel implements gameConstants {
 
@@ -32,6 +32,8 @@ public class playerPanel extends JPanel implements gameConstants {
     private JButton draw;
     // Say Uno button //
     private JButton sayUNO;
+    // Skip turn button //
+    private JButton skip;
     // Player label //
     private JLabel nameLabel;
     // Button listener //
@@ -63,6 +65,9 @@ public class playerPanel extends JPanel implements gameConstants {
 
         sayUNO.addActionListener(BUTTONLISTEN);
         sayUNO.addActionListener(handler);
+
+        skip.addActionListener(BUTTONLISTEN);
+        skip.addActionListener(handler);
     }
 
     /******************************************************************************
@@ -117,6 +122,7 @@ public class playerPanel extends JPanel implements gameConstants {
     public void setControlPane() {
         draw = new JButton("Draw");
         sayUNO = new JButton("Say UNO!");
+        skip = new JButton("Skip Turn");
         nameLabel = new JLabel(pName);
 
         // Style
@@ -128,12 +134,18 @@ public class playerPanel extends JPanel implements gameConstants {
         sayUNO.setFont(new Font("Arial", Font.BOLD, 20));
         sayUNO.setFocusable(false);
 
+        skip.setBackground(new Color(200, 200, 19));
+        skip.setFont(new Font("Arial", Font.BOLD, 20));
+        skip.setFocusable(false);
+
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setFont(new Font("Arial", Font.BOLD, 15));
 
         controlPane = Box.createVerticalBox();
         controlPane.add(nameLabel);
         controlPane.add(draw);
+        controlPane.add(Box.createVerticalStrut(15));
+        controlPane.add(skip);
         controlPane.add(Box.createVerticalStrut(15));
         controlPane.add(sayUNO);
 
@@ -183,6 +195,8 @@ public class playerPanel extends JPanel implements gameConstants {
                     BUTTONLISTEN.drawCard();
                 else if (actionEvent.getSource() == sayUNO)
                     BUTTONLISTEN.sayUNO();
+                else if (actionEvent.getSource() == skip)
+                    BUTTONLISTEN.skip();
             }
         }
     }

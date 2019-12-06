@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author TonyChanelle
  * @author Pratty Hongsyvilay
- * @author add name
+ * @author Myren Mitchell
  ******************************************************************************/
 public class Player {
 
@@ -88,7 +88,7 @@ public class Player {
 
     /******************************************************************************
      * This method is to return the total amount of cards in players hand.
-     * @returns - card hand total.
+     * @return - card hand total.
      ******************************************************************************/
     public int getPlayerHandTotal() {
         return playerHand.size();
@@ -107,7 +107,7 @@ public class Player {
      * This method turns game to next player. Like toggle function.
      ******************************************************************************/
     public void nextPlayerTurn() {
-        isPlayerTurn = (isPlayerTurn) ? false : true;
+        isPlayerTurn = !isPlayerTurn;
     }
 
     /******************************************************************************
@@ -119,11 +119,18 @@ public class Player {
     }
 
     /******************************************************************************
+     * @param turn - is it the player's turn?
+     ******************************************************************************/
+    public void setPlayerTurn(boolean turn) {
+        isPlayerTurn = turn;
+    }
+
+    /******************************************************************************
      * This method is checks if a players hand is empty.
      * @return - true if players hand is empty - else false.
      ******************************************************************************/
     public boolean hasCards() {
-        return playerHand.isEmpty() ? false : true;
+        return !playerHand.isEmpty();
     }
 
     /******************************************************************************
