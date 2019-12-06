@@ -101,7 +101,6 @@ public class gameSession extends JPanel {
 
     /******************************************************************************
      * This method sets the players of a game session
-     * ** TO BE CORRECTED FOR MULTI-PLAYER IMPLEMENTATION **
      ******************************************************************************/
     private void setPlayers() {
         if (game.getGameMode() == 1) {

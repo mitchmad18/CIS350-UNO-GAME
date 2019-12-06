@@ -32,7 +32,6 @@ public class AI extends Player implements gameConstants {
 
     /******************************************************************************
      * This method controls the move of the games AI.
-     * ** TO BE CORRECTED AND IMPLEMENTED AFTER BASIC FUNC PASSES ENOUGH TESTING **
      * @param topCard - card for play comparision.
      * @param gc - current game controller
      * @return - true if AI can make valid move - else false.

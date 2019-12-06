@@ -69,7 +69,7 @@ public class gameController implements gameConstants {
 
     /******************************************************************************
      * Method to return mode of the game after user has been prompted to select
-     * option. *TO BE CORRECTED for multi-AI ONLY**
+     * option.
      * @return - mode of game.
      ******************************************************************************/
     private void welcomeSetUp(JFrame parent) {
@@ -153,7 +153,6 @@ public class gameController implements gameConstants {
 
     /******************************************************************************
      * * Method to set color of WILD card if first on discard pile.
-     * ** TO BE CORRECTED TO REPLACE WITH card not of TYPE:WILD**
      * @param firstCard - first card on discard pile.
      ******************************************************************************/
     private void changeFirstCard(card firstCard) {
@@ -201,7 +200,6 @@ public class gameController implements gameConstants {
 
     /******************************************************************************
      * Method to check for valid card play in game.
-     * ** TO BE CORRECTED TESTING FOR BUG FIX **
      * @param cardPlayed - card played.
      * @return - true if valid move - else false.
      ******************************************************************************/
